@@ -1,10 +1,13 @@
-[gd_scene load_steps=4 format=3 uid="uid://qyb5nrgqndmu"]
+[gd_scene load_steps=5 format=3 uid="uid://qyb5nrgqndmu"]
 
 [ext_resource type="Script" path="res://scripts/Player.gd" id="1_gq5ns"]
 [ext_resource type="Texture2D" uid="uid://bw8wcut7keyc1" path="res://icon.svg" id="2_8mfdu"]
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_8krbk"]
-radius = 32.0
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_vvgu1"]
+size = Vector2(64, 64)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ua5g8"]
+size = Vector2(52, 52)
 
 [node name="Player" type="CharacterBody2D"]
 script = ExtResource("1_gq5ns")
@@ -14,6 +17,15 @@ scale = Vector2(0.5, 0.5)
 texture = ExtResource("2_8mfdu")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-shape = SubResource("CircleShape2D_8krbk")
+shape = SubResource("RectangleShape2D_vvgu1")
 
 [node name="Camera2D" type="Camera2D" parent="."]
+
+[node name="Area2D" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("RectangleShape2D_ua5g8")
+
+[connection signal="body_entered" from="Area2D" to="." method="_on_body_entered"]
