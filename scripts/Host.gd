@@ -1,11 +1,20 @@
 extends CharacterBody2D
 class_name Host
 
-# Called when the node enters the scene tree for the first time.
-func _ready():
-	pass # Replace with function body.
+@export var dash_timer = 0.2
+@export var dash_force = 1000.0
 
+var player: Player = null
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(_delta):
+var is_dashing = false
+var dash_direction = Vector2.ZERO
+
+func primary_action():
+	player.follow_host = true
+	is_dashing = true
+	
+	var mouse_position = get_global_mouse_position()
+	dash_direction = (mouse_position - global_position).normalized() * dash_force
+
+func secondary_action():
 	pass

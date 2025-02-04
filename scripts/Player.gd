@@ -1,4 +1,5 @@
 extends CharacterBody2D
+class_name Player
 
 @export var speed = 1000.0
 @export var lunge_force = 500.0
@@ -18,32 +19,49 @@ func _process(delta):
 			
 			collision_mask = 0b0111
 	else:
-		move_input(delta)
+		handle_input(delta)
 
 	move_and_slide()
 
-func move_input(delta: float):
-	var input_direction = Input.get_vector("moveLeft", "moveRight", "moveUp", "moveDown")
+func handle_input(delta: float):
+	var input_direction = Input.get_vector("move_left", "move_right", "move_up", "move_down")
 
-	if !is_lunging && Input.is_action_just_pressed("primaryAction"):
-		is_lunging = true
-		lunge_timer = lunge_duration
-
-		collision_mask = 0b0011
-		
-		var mouse_position = get_global_mouse_position()
-		lunge_direction = (mouse_position - global_position).normalized() * lunge_force
-
+	if Input.is_action_just_pressed("primary_action"):
 		if host:
-			host = null
+			host.primary_action()
+		elif !is_lunging:
+			lunge()
+
+	elif Input.is_action_just_pressed("secondary_action"):
+		if host:
+			host.secondary_action()
+
+	elif Input.is_action_just_pressed("tertiary_action"):
+		if host:
+			lunge()
 	
-	velocity = (input_direction * speed * delta * 100) if !is_lunging else lunge_direction
+	else:
+		velocity = host.velocity if host else lunge_direction if is_lunging else (input_direction * speed * delta * 100)
 
 	if host:
-		host.position = global_position
+		velocity = host.velocity
+
+func lunge():
+	is_lunging = true
+	lunge_timer = lunge_duration
+
+	collision_mask = 0b0011
+
+	var mouse_position = get_global_mouse_position()
+	lunge_direction = (mouse_position - global_position).normalized() * lunge_force
+
+	if host:
+		host.player = null
+		host = null
 
 func _on_body_entered(body: Host) -> void:
 	host = body
+	host.player = self
 	position = body.global_position
 
 	is_lunging = false
