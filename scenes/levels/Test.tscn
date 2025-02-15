@@ -1,8 +1,9 @@
-[gd_scene load_steps=4 format=3 uid="uid://ci76og8wvro2o"]
+[gd_scene load_steps=5 format=3 uid="uid://ci76og8wvro2o"]
 
 [ext_resource type="PackedScene" uid="uid://qyb5nrgqndmu" path="res://scenes/objects/Player.tscn" id="1_rj508"]
 [ext_resource type="PackedScene" uid="uid://xm5q2u0eyi18" path="res://scenes/objects/Guard.tscn" id="2_orj6o"]
 [ext_resource type="Script" path="res://scripts/Health.gd" id="3_mbplh"]
+[ext_resource type="Script" path="res://scripts/GameOver.gd" id="4_peaue"]
 
 [node name="Test" type="Node2D"]
 
@@ -44,4 +45,49 @@ offset_bottom = 50.0
 value = 50.0
 show_percentage = false
 
+[node name="GameOver" type="Control" parent="CanvasLayer"]
+visible = false
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("4_peaue")
+
+[node name="ColorRect2" type="ColorRect" parent="CanvasLayer/GameOver"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -25.0
+offset_top = -125.0
+offset_right = 25.0
+offset_bottom = 135.0
+grow_horizontal = 2
+grow_vertical = 2
+rotation = 0.785398
+pivot_offset = Vector2(25, 130)
+color = Color(1, 0, 0, 1)
+
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer/GameOver"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -25.0
+offset_top = -132.0
+offset_right = 25.0
+offset_bottom = 128.0
+grow_horizontal = 2
+grow_vertical = 2
+rotation = -0.785398
+pivot_offset = Vector2(25, 130)
+color = Color(1, 0, 0, 1)
+
+[connection signal="died" from="Player" to="CanvasLayer/GameOver" method="_on_player_died"]
 [connection signal="player_health_set" from="Player" to="CanvasLayer/Health" method="_on_player_health_set"]
