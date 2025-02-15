@@ -2,7 +2,7 @@
 
 [ext_resource type="PackedScene" uid="uid://qyb5nrgqndmu" path="res://scenes/objects/Player.tscn" id="1_rj508"]
 [ext_resource type="PackedScene" uid="uid://xm5q2u0eyi18" path="res://scenes/objects/Guard.tscn" id="2_orj6o"]
-[ext_resource type="Texture2D" uid="uid://bw8wcut7keyc1" path="res://icon.svg" id="3_6rxh3"]
+[ext_resource type="Script" path="res://scripts/Health.gd" id="3_mbplh"]
 
 [node name="Test" type="Node2D"]
 
@@ -12,10 +12,36 @@ collision_mask = 7
 
 [node name="Host2" parent="." instance=ExtResource("2_orj6o")]
 position = Vector2(546, -98)
+dash_force = 500.0
+dash_duration = 0.2
 
 [node name="Host" parent="." instance=ExtResource("2_orj6o")]
 position = Vector2(308, -119)
+dash_force = 500.0
+dash_duration = 0.2
 
-[node name="Icon" type="Sprite2D" parent="."]
-position = Vector2(127, 206)
-texture = ExtResource("3_6rxh3")
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="Health" type="Control" parent="CanvasLayer" node_paths=PackedStringArray("host_health_bar", "parasite_health_bar")]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("3_mbplh")
+host_health_bar = NodePath("HostHealth")
+parasite_health_bar = NodePath("ParasiteHealth")
+
+[node name="HostHealth" type="ProgressBar" parent="CanvasLayer/Health"]
+offset_right = 363.0
+offset_bottom = 27.0
+value = 50.0
+show_percentage = false
+
+[node name="ParasiteHealth" type="ProgressBar" parent="CanvasLayer/Health"]
+offset_top = 28.0
+offset_right = 215.0
+offset_bottom = 50.0
+value = 50.0
+show_percentage = false
+
+[connection signal="player_health_set" from="Player" to="CanvasLayer/Health" method="_on_player_health_set"]

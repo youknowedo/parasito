@@ -1,5 +1,7 @@
-extends CharacterBody2D
+extends Entity
 class_name Player
+
+signal player_health_set(health: int, max_health: int, host_health: int, max_host_health: int)
 
 @export var speed = 1000.0
 @export var lunge_force = 500.0
@@ -10,6 +12,9 @@ var lunge_timer = 0.0
 var lunge_direction = Vector2.ZERO
 
 var host: Host = null
+
+func _ready():
+	player_health_set.emit(health, max_health, 0, 0)
 
 func _process(delta):
 	if Input.is_action_just_pressed("tertiary_action"):
@@ -59,3 +64,6 @@ func _on_body_entered(body: Node2D) -> void:
 
 	is_lunging = false
 	lunge_timer = 0.0
+
+func _on_health_set(_new_health: int, _max_health: int) -> void:
+	player_health_set.emit(health, max_health, host.health if host else 0, host.max_health if host else 0)

@@ -1,4 +1,4 @@
-extends CharacterBody2D
+extends Entity
 class_name Host
 
 @export var speed = 500.0
