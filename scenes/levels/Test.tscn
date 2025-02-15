@@ -1,19 +1,21 @@
-[gd_scene load_steps=3 format=3 uid="uid://ci76og8wvro2o"]
+[gd_scene load_steps=4 format=3 uid="uid://ci76og8wvro2o"]
 
 [ext_resource type="PackedScene" uid="uid://qyb5nrgqndmu" path="res://scenes/objects/Player.tscn" id="1_rj508"]
-[ext_resource type="PackedScene" uid="uid://xm5q2u0eyi18" path="res://scenes/objects/Host.tscn" id="2_orj6o"]
+[ext_resource type="PackedScene" uid="uid://xm5q2u0eyi18" path="res://scenes/objects/Guard.tscn" id="2_orj6o"]
+[ext_resource type="Texture2D" uid="uid://bw8wcut7keyc1" path="res://icon.svg" id="3_6rxh3"]
 
 [node name="Test" type="Node2D"]
 
 [node name="Player" parent="." instance=ExtResource("1_rj508")]
 collision_layer = 2
 collision_mask = 7
-speed = 100.0
 
 [node name="Host2" parent="." instance=ExtResource("2_orj6o")]
 position = Vector2(546, -98)
-collision_layer = 4
 
 [node name="Host" parent="." instance=ExtResource("2_orj6o")]
-position = Vector2(273, -49)
-collision_layer = 4
+position = Vector2(308, -119)
+
+[node name="Icon" type="Sprite2D" parent="."]
+position = Vector2(127, 206)
+texture = ExtResource("3_6rxh3")

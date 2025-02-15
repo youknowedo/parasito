@@ -1,0 +1,48 @@
+[gd_scene load_steps=5 format=3 uid="uid://xm5q2u0eyi18"]
+
+[ext_resource type="Script" path="res://scripts/Guard.gd" id="1_bh6xs"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_gs4fm"]
+size = Vector2(128, 128)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_xw4eo"]
+radius = 124.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_oljxs"]
+radius = 512.0
+
+[node name="Guard" type="CharacterBody2D" node_paths=PackedStringArray("vision_collider", "attack_range_collider") groups=["host"]]
+collision_layer = 4
+collision_mask = 5
+script = ExtResource("1_bh6xs")
+dash_force = null
+dash_duration = null
+vision_collider = NodePath("VisionRange/CollisionShape2D")
+attack_range_collider = NodePath("AttackRange/CollisionShape2D")
+speed = 100.0
+
+[node name="Polygon2D" type="Polygon2D" parent="."]
+position = Vector2(-0.5, 0)
+scale = Vector2(0.992308, 1)
+color = Color(1, 0, 0, 1)
+polygon = PackedVector2Array(-63.9922, 64, 65, 64, 65, -64, -63.9922, -64)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_gs4fm")
+
+[node name="AttackRange" type="Area2D" parent="."]
+collision_mask = 6
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AttackRange"]
+shape = SubResource("CircleShape2D_xw4eo")
+
+[node name="VisionRange" type="Area2D" parent="."]
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="VisionRange"]
+shape = SubResource("CircleShape2D_oljxs")
+
+[connection signal="body_entered" from="AttackRange" to="." method="_on_body_entered_attack_range"]
+[connection signal="body_exited" from="AttackRange" to="." method="_on_body_exited_attack_range"]
+[connection signal="body_entered" from="VisionRange" to="." method="_on_body_entered_vision_range"]
+[connection signal="body_exited" from="VisionRange" to="." method="_on_body_exited_vision_range"]

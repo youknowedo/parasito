@@ -12,39 +12,27 @@ var lunge_direction = Vector2.ZERO
 var host: Host = null
 
 func _process(delta):
+	if Input.is_action_just_pressed("tertiary_action"):
+		lunge()
+	
+	if host:
+		return
+
 	if is_lunging:
 		lunge_timer -= delta
 		if lunge_timer <= 0:
 			is_lunging = false
 			
 			collision_mask = 0b0111
+
+		velocity = lunge_direction
+
 	else:
-		handle_input(delta)
+		var input_direction = Input.get_vector("move_left", "move_right", "move_up", "move_down")
+
+		velocity = input_direction * speed * delta * 100
 
 	move_and_slide()
-
-func handle_input(delta: float):
-	var input_direction = Input.get_vector("move_left", "move_right", "move_up", "move_down")
-
-	if Input.is_action_just_pressed("primary_action"):
-		if host:
-			host.primary_action()
-		elif !is_lunging:
-			lunge()
-
-	elif Input.is_action_just_pressed("secondary_action"):
-		if host:
-			host.secondary_action()
-
-	elif Input.is_action_just_pressed("tertiary_action"):
-		if host:
-			lunge()
-	
-	else:
-		velocity = host.velocity if host else lunge_direction if is_lunging else (input_direction * speed * delta * 100)
-
-	if host:
-		velocity = host.velocity
 
 func lunge():
 	is_lunging = true
@@ -56,12 +44,17 @@ func lunge():
 	lunge_direction = (mouse_position - global_position).normalized() * lunge_force
 
 	if host:
-		host.player = null
+		host.occupier = null
 		host = null
+		collision_layer = 0b0010
 
-func _on_body_entered(body: Host) -> void:
+func _on_body_entered(body: Node2D) -> void:
+	if !body.is_in_group("host"):
+		return
+
 	host = body
-	host.player = self
+	collision_layer = 0b0100
+	host.occupier = self
 	position = body.global_position
 
 	is_lunging = false

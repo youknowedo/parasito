@@ -1,20 +1,34 @@
 extends CharacterBody2D
 class_name Host
 
-@export var dash_timer = 0.2
-@export var dash_force = 1000.0
+@export var speed = 500.0
 
-var player: Player = null
+var occupier: Player = null
+var attack_target: Player = null
 
-var is_dashing = false
-var dash_direction = Vector2.ZERO
+func _process(delta):
+	if !process_and_skip(delta):
+		if !occupier:
+			return
+
+		if Input.is_action_just_pressed("primary_action"):
+			primary_action()
+
+		elif Input.is_action_just_pressed("secondary_action"):
+			secondary_action()
+
+		else:
+			var input_direction = Input.get_vector("move_left", "move_right", "move_up", "move_down")
+
+			velocity = input_direction * speed * delta * 100
+
+		move_and_slide()
+		occupier.position = global_position
+
+func process_and_skip(_delta: float) -> bool:
+	return false
 
 func primary_action():
-	player.follow_host = true
-	is_dashing = true
-	
-	var mouse_position = get_global_mouse_position()
-	dash_direction = (mouse_position - global_position).normalized() * dash_force
-
+	pass
 func secondary_action():
 	pass
