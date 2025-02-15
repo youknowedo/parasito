@@ -4,7 +4,6 @@ class_name Host
 @export var speed = 500.0
 
 var occupier: Player = null
-var attack_target: Player = null
 
 func _process(delta):
 	if !process_and_skip(delta):

@@ -6,6 +6,8 @@ extends "res://scripts/Host.gd"
 @export var attack_range_collider: CollisionShape2D = null
 
 var in_attack_range = false
+var attack_timer = 1.0
+var attack_target: Player = null
 
 var is_dashing = false
 var dash_timer = 0.0
@@ -27,6 +29,11 @@ func process_and_skip(delta: float) -> bool:
 
 	if attack_target:
 		if in_attack_range:
+			attack_timer -= delta
+			if attack_timer <= 0:
+				attack_target.damage(10)
+				attack_timer = 1.0
+
 			return false
 		var direction = (attack_target.global_position - global_position).normalized()
 		velocity = direction * speed * delta * 100
