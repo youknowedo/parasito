@@ -1,6 +1,6 @@
 [gd_scene load_steps=5 format=3 uid="uid://xm5q2u0eyi18"]
 
-[ext_resource type="Script" path="res://scripts/Guard.gd" id="1_bh6xs"]
+[ext_resource type="Script" path="res://scripts/entities/hostiles/hosts/Guard.gd" id="1_qbgcj"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_gs4fm"]
 size = Vector2(128, 128)
@@ -14,13 +14,11 @@ radius = 124.0
 [node name="Guard" type="CharacterBody2D" node_paths=PackedStringArray("vision_area", "vision_area_collider", "attack_range_area", "attack_range_area_collider") groups=["host"]]
 collision_layer = 4
 collision_mask = 5
-script = ExtResource("1_bh6xs")
-dash_force = 5000.0
+script = ExtResource("1_qbgcj")
 vision_area = NodePath("VisionRange")
 vision_area_collider = NodePath("VisionRange/CollisionShape2D")
 attack_range_area = NodePath("AttackRange")
 attack_range_area_collider = NodePath("AttackRange/CollisionShape2D")
-speed = 5000.0
 
 [node name="Polygon2D" type="Polygon2D" parent="."]
 position = Vector2(-0.5, 0)

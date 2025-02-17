@@ -1,7 +1,7 @@
 [gd_scene load_steps=5 format=3 uid="uid://qyb5nrgqndmu"]
 
-[ext_resource type="Script" path="res://scripts/Player.gd" id="1_gq5ns"]
-[ext_resource type="Script" path="res://scripts/Health.gd" id="2_xxf50"]
+[ext_resource type="Script" path="res://scripts/entities/Player.gd" id="1_yndod"]
+[ext_resource type="Script" path="res://scripts/ui/Health.gd" id="2_xxf50"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_vvgu1"]
 size = Vector2(64, 64)
@@ -11,10 +11,7 @@ size = Vector2(52, 52)
 
 [node name="Player" type="CharacterBody2D" groups=["player"]]
 collision_layer = 2
-script = ExtResource("1_gq5ns")
-speed = 10000.0
-max_health = 20
-health = 20
+script = ExtResource("1_yndod")
 
 [node name="Polygon2D" type="Polygon2D" parent="."]
 color = Color(0, 1, 0, 1)

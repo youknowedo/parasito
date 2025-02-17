@@ -17,6 +17,11 @@ func _draw():
 	draw_circle(Vector2.ZERO, attack_range_area_collider.shape.radius, Color(0, 1, 0), false, 1)
 
 func _ready():
+	vision_area = vision_area if vision_area else get_node("VisionRange")
+	vision_area_collider = vision_area_collider if vision_area_collider else vision_area.get_node("VisionRange/CollisionShape2D")
+	attack_range_area = attack_range_area if attack_range_area else get_node("AttackRange")
+	attack_range_area_collider = attack_range_area_collider if attack_range_area_collider else attack_range_area.get_node("AttackRange/CollisionShape2D")
+
 	vision_area.connect("body_entered", on_body_entered_vision_range)
 	vision_area.connect("body_exited", on_body_exited_vision_range)
 	attack_range_area.connect("body_entered", on_body_entered_attack_range)

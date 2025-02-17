@@ -3,20 +3,17 @@
 [ext_resource type="PackedScene" uid="uid://qyb5nrgqndmu" path="res://scenes/objects/Player.tscn" id="1_rj508"]
 [ext_resource type="PackedScene" uid="uid://xm5q2u0eyi18" path="res://scenes/objects/Guard.tscn" id="2_orj6o"]
 [ext_resource type="PackedScene" uid="uid://bi1w88uyagusu" path="res://scenes/objects/Rascal.tscn" id="3_h0ly8"]
-[ext_resource type="Script" path="res://scripts/GameOver.gd" id="4_peaue"]
+[ext_resource type="Script" path="res://scripts/ui/GameOver.gd" id="4_peaue"]
 
 [node name="Test" type="Node2D"]
 
 [node name="Player" parent="." instance=ExtResource("1_rj508")]
 
-[node name="Guard1" parent="." instance=ExtResource("2_orj6o")]
-position = Vector2(546, -98)
-
-[node name="Guard2" parent="." instance=ExtResource("2_orj6o")]
-position = Vector2(101, -556)
+[node name="Guard" parent="." instance=ExtResource("2_orj6o")]
+position = Vector2(220, -143)
 
 [node name="Rascal" parent="." instance=ExtResource("3_h0ly8")]
-position = Vector2(-402, 119)
+position = Vector2(-246, 148)
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
@@ -63,5 +60,3 @@ grow_vertical = 2
 rotation = -0.785398
 pivot_offset = Vector2(25, 130)
 color = Color(1, 0, 0, 1)
-
-[connection signal="died" from="Player" to="CanvasLayer/GameOver" method="_on_player_died"]
