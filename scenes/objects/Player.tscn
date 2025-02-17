@@ -1,6 +1,7 @@
-[gd_scene load_steps=4 format=3 uid="uid://qyb5nrgqndmu"]
+[gd_scene load_steps=5 format=3 uid="uid://qyb5nrgqndmu"]
 
 [ext_resource type="Script" path="res://scripts/Player.gd" id="1_gq5ns"]
+[ext_resource type="Script" path="res://scripts/Health.gd" id="2_xxf50"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_vvgu1"]
 size = Vector2(64, 64)
@@ -9,8 +10,11 @@ size = Vector2(64, 64)
 size = Vector2(52, 52)
 
 [node name="Player" type="CharacterBody2D" groups=["player"]]
+collision_layer = 2
 script = ExtResource("1_gq5ns")
-speed = 100.0
+speed = 10000.0
+max_health = 20
+health = 20
 
 [node name="Polygon2D" type="Polygon2D" parent="."]
 color = Color(0, 1, 0, 1)
@@ -29,4 +33,31 @@ collision_mask = 4
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
 shape = SubResource("RectangleShape2D_ua5g8")
 
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="Health" type="Control" parent="CanvasLayer" node_paths=PackedStringArray("host_health_bar", "parasite_health_bar")]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("2_xxf50")
+host_health_bar = NodePath("HostHealth")
+parasite_health_bar = NodePath("ParasiteHealth")
+
+[node name="HostHealth" type="ProgressBar" parent="CanvasLayer/Health"]
+layout_mode = 0
+offset_right = 363.0
+offset_bottom = 27.0
+value = 50.0
+show_percentage = false
+
+[node name="ParasiteHealth" type="ProgressBar" parent="CanvasLayer/Health"]
+layout_mode = 0
+offset_top = 28.0
+offset_right = 215.0
+offset_bottom = 50.0
+value = 50.0
+show_percentage = false
+
+[connection signal="player_health_set" from="." to="CanvasLayer/Health" method="_on_player_health_set"]
 [connection signal="body_entered" from="Area2D" to="." method="_on_body_entered"]

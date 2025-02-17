@@ -1,7 +1,6 @@
-extends Entity
+extends Hostile
 class_name Host
 
-@export var speed = 500.0
 
 var occupier: Player = null
 
@@ -19,7 +18,7 @@ func _process(delta):
 		else:
 			var input_direction = Input.get_vector("move_left", "move_right", "move_up", "move_down")
 
-			velocity = input_direction * speed * delta * 100
+			velocity = input_direction * speed * delta 
 
 		move_and_slide()
 		occupier.position = global_position

@@ -4,9 +4,11 @@ class_name Player
 signal player_health_set(health: int, max_health: int, host_health: int, max_host_health: int)
 signal died()
 
-@export var speed = 1000.0
+@export var passive_damage_timer_duration = 1.0
 @export var lunge_force = 500.0
 @export var lunge_duration = 0.2
+
+@onready var passive_damage_timer = passive_damage_timer_duration
 
 var is_lunging = false
 var lunge_timer = 0.0
@@ -24,6 +26,11 @@ func _process(delta):
 	if host:
 		return
 
+	passive_damage_timer -= delta
+	if passive_damage_timer <= 0:
+		passive_damage_timer = passive_damage_timer_duration
+		damage(1)
+
 	if is_lunging:
 		lunge_timer -= delta
 		if lunge_timer <= 0:
@@ -36,7 +43,7 @@ func _process(delta):
 	else:
 		var input_direction = Input.get_vector("move_left", "move_right", "move_up", "move_down")
 
-		velocity = input_direction * speed * delta * 100
+		velocity = input_direction * speed * delta
 
 	move_and_slide()
 

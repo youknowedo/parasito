@@ -4,6 +4,7 @@ class_name Entity
 signal health_changed(new_health: int, old_health: int)
 signal health_set(health: int, max_health: int)
 
+@export var speed = 500.00
 @export var max_health = 100
 @export var health = 100
 
