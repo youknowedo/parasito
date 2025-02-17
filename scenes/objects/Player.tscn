@@ -1,22 +1,29 @@
-[gd_scene load_steps=5 format=3 uid="uid://qyb5nrgqndmu"]
+[gd_scene load_steps=8 format=3 uid="uid://qyb5nrgqndmu"]
 
 [ext_resource type="Script" path="res://scripts/entities/Player.gd" id="1_yndod"]
+[ext_resource type="Texture2D" uid="uid://vbpuqie36xy6" path="res://sprites/parasite.png" id="2_tdph3"]
 [ext_resource type="Script" path="res://scripts/ui/Health.gd" id="2_xxf50"]
+[ext_resource type="Texture2D" uid="uid://bhthqxakvn72r" path="res://sprites/HUD.png" id="4_0anwk"]
+[ext_resource type="Texture2D" uid="uid://dn1p6eken1y1h" path="res://sprites/white.png" id="5_251g0"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_vvgu1"]
-size = Vector2(64, 64)
+size = Vector2(8, 8)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ua5g8"]
-size = Vector2(52, 52)
+size = Vector2(4, 4)
 
 [node name="Player" type="CharacterBody2D" groups=["player"]]
 collision_layer = 2
 script = ExtResource("1_yndod")
+speed = 1000.0
+max_health = 10
+health = 10
 
-[node name="Polygon2D" type="Polygon2D" parent="."]
-color = Color(0, 1, 0, 1)
-texture_scale = Vector2(0.655, 0.655)
-polygon = PackedVector2Array(-32, 32, -32, -32, 32, -32, 32, 32)
+[node name="Parasite" type="Sprite2D" parent="."]
+texture_filter = 1
+texture = ExtResource("2_tdph3")
+region_enabled = true
+region_rect = Rect2(0, 0, 16, 16)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_vvgu1")
@@ -33,28 +40,46 @@ shape = SubResource("RectangleShape2D_ua5g8")
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
 [node name="Health" type="Control" parent="CanvasLayer" node_paths=PackedStringArray("host_health_bar", "parasite_health_bar")]
+texture_filter = 1
 layout_mode = 3
-anchors_preset = 0
-offset_right = 40.0
-offset_bottom = 40.0
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 script = ExtResource("2_xxf50")
 host_health_bar = NodePath("HostHealth")
 parasite_health_bar = NodePath("ParasiteHealth")
 
-[node name="HostHealth" type="ProgressBar" parent="CanvasLayer/Health"]
+[node name="TextureRect" type="TextureRect" parent="CanvasLayer/Health"]
 layout_mode = 0
-offset_right = 363.0
-offset_bottom = 27.0
-value = 50.0
-show_percentage = false
+offset_right = 256.0
+offset_bottom = 240.0
+texture = ExtResource("4_0anwk")
 
-[node name="ParasiteHealth" type="ProgressBar" parent="CanvasLayer/Health"]
+[node name="HostHealth" type="TextureProgressBar" parent="CanvasLayer/Health"]
+texture_filter = 1
+texture_repeat = 2
 layout_mode = 0
-offset_top = 28.0
-offset_right = 215.0
-offset_bottom = 50.0
-value = 50.0
-show_percentage = false
+offset_left = 10.0
+offset_top = 9.0
+offset_right = 70.0
+offset_bottom = 17.0
+value = 100.0
+nine_patch_stretch = true
+texture_progress = ExtResource("5_251g0")
+
+[node name="ParasiteHealth" type="TextureProgressBar" parent="CanvasLayer/Health"]
+texture_filter = 1
+texture_repeat = 2
+layout_mode = 0
+offset_left = 10.0
+offset_top = 20.0
+offset_right = 70.0
+offset_bottom = 22.0
+value = 100.0
+nine_patch_stretch = true
+texture_progress = ExtResource("5_251g0")
 
 [connection signal="player_health_set" from="." to="CanvasLayer/Health" method="_on_player_health_set"]
 [connection signal="body_entered" from="Area2D" to="." method="_on_body_entered"]

@@ -1,15 +1,16 @@
-[gd_scene load_steps=5 format=3 uid="uid://xm5q2u0eyi18"]
+[gd_scene load_steps=6 format=3 uid="uid://xm5q2u0eyi18"]
 
 [ext_resource type="Script" path="res://scripts/entities/hostiles/hosts/Guard.gd" id="1_qbgcj"]
+[ext_resource type="Texture2D" uid="uid://bog42spoatx13" path="res://sprites/guard.png" id="2_hgvo4"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_gs4fm"]
-size = Vector2(128, 128)
+size = Vector2(16, 16)
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_oljxs"]
-radius = 512.0
+radius = 201.022
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_xw4eo"]
-radius = 124.0
+radius = 20.6155
 
 [node name="Guard" type="CharacterBody2D" node_paths=PackedStringArray("vision_area", "vision_area_collider", "attack_range_area", "attack_range_area_collider") groups=["host"]]
 collision_layer = 4
@@ -20,11 +21,11 @@ vision_area_collider = NodePath("VisionRange/CollisionShape2D")
 attack_range_area = NodePath("AttackRange")
 attack_range_area_collider = NodePath("AttackRange/CollisionShape2D")
 
-[node name="Polygon2D" type="Polygon2D" parent="."]
-position = Vector2(-0.5, 0)
-scale = Vector2(0.992308, 1)
-color = Color(1, 0, 0, 1)
-polygon = PackedVector2Array(-63.9922, 64, 65, 64, 65, -64, -63.9922, -64)
+[node name="Guard" type="Sprite2D" parent="."]
+texture_filter = 1
+texture = ExtResource("2_hgvo4")
+region_enabled = true
+region_rect = Rect2(0, 0, 32, 32)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_gs4fm")

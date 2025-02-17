@@ -1,6 +1,7 @@
 extends Hostile
 
-@export var lunge_force = 500.0
+@export var attack_damage = 10
+@export var lunge_force = 6000.0
 @export var lunge_duration = 0.2
 
 var is_lunging = false
@@ -45,5 +46,5 @@ func _on_body_entered_inside_area(body: Player) -> void:
 	if !body.is_in_group("player"):
 		return
 
-	body.damage(10)
+	body.damage(attack_damage)
 	queue_free()
