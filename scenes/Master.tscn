@@ -1,0 +1,105 @@
+[gd_scene load_steps=7 format=3 uid="uid://ci76og8wvro2o"]
+
+[ext_resource type="PackedScene" uid="uid://qyb5nrgqndmu" path="res://scenes/objects/Player.tscn" id="1_4wp0b"]
+[ext_resource type="Script" path="res://scripts/ui/Health.gd" id="2_ug3q2"]
+[ext_resource type="Texture2D" uid="uid://bhthqxakvn72r" path="res://sprites/HUD.png" id="3_gnscs"]
+[ext_resource type="Texture2D" uid="uid://dn1p6eken1y1h" path="res://sprites/white.png" id="4_2x5w2"]
+[ext_resource type="Script" path="res://scripts/ui/GameOver.gd" id="5_fnvnq"]
+[ext_resource type="PackedScene" uid="uid://dtfc8yl5uikn1" path="res://scenes/rooms/Cave1.tscn" id="6_w6xps"]
+
+[node name="Test" type="Node2D"]
+
+[node name="Player" parent="." instance=ExtResource("1_4wp0b")]
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="Health" type="Control" parent="CanvasLayer" node_paths=PackedStringArray("host_health_bar", "parasite_health_bar")]
+texture_filter = 1
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("2_ug3q2")
+host_health_bar = NodePath("HostHealth")
+parasite_health_bar = NodePath("ParasiteHealth")
+
+[node name="TextureRect" type="TextureRect" parent="CanvasLayer/Health"]
+layout_mode = 0
+offset_right = 256.0
+offset_bottom = 240.0
+texture = ExtResource("3_gnscs")
+
+[node name="HostHealth" type="TextureProgressBar" parent="CanvasLayer/Health"]
+texture_filter = 1
+texture_repeat = 2
+layout_mode = 0
+offset_left = 10.0
+offset_top = 9.0
+offset_right = 70.0
+offset_bottom = 17.0
+value = 100.0
+nine_patch_stretch = true
+texture_progress = ExtResource("4_2x5w2")
+
+[node name="ParasiteHealth" type="TextureProgressBar" parent="CanvasLayer/Health"]
+texture_filter = 1
+texture_repeat = 2
+layout_mode = 0
+offset_left = 10.0
+offset_top = 20.0
+offset_right = 70.0
+offset_bottom = 22.0
+value = 100.0
+nine_patch_stretch = true
+texture_progress = ExtResource("4_2x5w2")
+
+[node name="GameOver" type="Control" parent="CanvasLayer"]
+visible = false
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("5_fnvnq")
+
+[node name="ColorRect2" type="ColorRect" parent="CanvasLayer/GameOver"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -25.0
+offset_top = -125.0
+offset_right = 25.0
+offset_bottom = 135.0
+grow_horizontal = 2
+grow_vertical = 2
+rotation = 0.785398
+pivot_offset = Vector2(25, 130)
+color = Color(1, 0, 0, 1)
+
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer/GameOver"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -25.0
+offset_top = -132.0
+offset_right = 25.0
+offset_bottom = 128.0
+grow_horizontal = 2
+grow_vertical = 2
+rotation = -0.785398
+pivot_offset = Vector2(25, 130)
+color = Color(1, 0, 0, 1)
+
+[node name="Cave1" parent="." instance=ExtResource("6_w6xps")]
+
+[connection signal="died" from="Player" to="CanvasLayer/GameOver" method="_on_player_died"]
+[connection signal="player_health_set" from="Player" to="CanvasLayer/Health" method="_on_player_health_set"]
