@@ -22,6 +22,7 @@ func _process(delta):
 
 		move_and_slide()
 		occupier.position = global_position
+		occupier.actual_position = global_position
 
 func process_and_skip(_delta: float) -> bool:
 	return false

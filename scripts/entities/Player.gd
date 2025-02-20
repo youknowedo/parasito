@@ -18,8 +18,12 @@ var host: Host = null
 
 func _ready():
 	player_health_set.emit(health, max_health, 0, 0)
+	actual_position = position
 
 func _process(delta):
+	if health <= 0:
+		return
+
 	if Input.is_action_just_pressed("tertiary_action"):
 		lunge()
 	
@@ -38,14 +42,17 @@ func _process(delta):
 			
 			collision_mask = 0b0111
 
-		velocity = lunge_direction
+		velocity = lunge_direction * lunge_force * delta
 
 	else:
 		var input_direction = Input.get_vector("move_left", "move_right", "move_up", "move_down")
 
 		velocity = input_direction * speed * delta
 
+	position = actual_position
 	move_and_slide()
+	actual_position = position
+	position = position.round()
 
 func lunge():
 	is_lunging = true
@@ -54,7 +61,7 @@ func lunge():
 	collision_mask = 0b0011
 
 	var mouse_position = get_global_mouse_position()
-	lunge_direction = (mouse_position - global_position).normalized() * lunge_force
+	lunge_direction = (mouse_position - global_position).normalized()
 
 	if host:
 		host.occupier = null
@@ -66,9 +73,11 @@ func _on_body_entered(body: Node2D) -> void:
 		return
 
 	host = body
+	_on_health_set(health, host.health)
 	collision_layer = 0b0100
 	host.occupier = self
 	position = body.global_position
+	actual_position = position
 
 	is_lunging = false
 	lunge_timer = 0.0

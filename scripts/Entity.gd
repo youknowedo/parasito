@@ -8,6 +8,8 @@ signal health_set(health: int, max_health: int)
 @export var max_health = 100
 @export var health = 100
 
+var actual_position: Vector2
+
 func _ready():
 	health_changed.emit(health, health)
 
