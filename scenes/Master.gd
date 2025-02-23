@@ -4,11 +4,32 @@ extends Node2D
 @export var rooms: Array[PackedScene] = []
 @export var enemies: Array[PackedScene] = []
 
+@export var exit_area: Area2D
+
+var current_room_index = -1
+var current_room: Room
+
 func _ready() -> void:
+	init_room()
 
-	var initial_room: Room = rooms[randi() % rooms.size()].instantiate()
-	initial_room.position = Vector2.ZERO
-	player.actual_position = initial_room.player_spawn_point.position
-	initial_room.enemies = enemies
+func init_room() -> void:
+	var i = randi() % rooms.size()
+	while i == current_room_index:
+		i = randi() % rooms.size()
+	current_room_index = i
 
-	add_child(initial_room)
+	current_room = rooms[current_room_index].instantiate()
+	current_room.position = Vector2.ZERO
+	player.actual_position = current_room.player_spawn_point.position
+	current_room.enemies = enemies
+	exit_area.position = current_room.exit_point.position
+
+	add_child(current_room)
+
+
+func _on_area_body_entered_exit(body:Node2D) -> void:
+	if !body.is_in_group("player"):
+		return
+
+	current_room.queue_free()
+	init_room()

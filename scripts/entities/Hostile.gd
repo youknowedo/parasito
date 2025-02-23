@@ -13,8 +13,8 @@ var in_attack_range = false
 var attack_target: Player = null
 
 func _draw():
-	draw_circle(Vector2.ZERO, vision_area_collider.shape.radius, Color(1, 0, 0), false, 1)
-	draw_circle(Vector2.ZERO, attack_range_area_collider.shape.radius, Color(0, 1, 0), false, 1)
+	draw_circle(Vector2.ZERO, vision_area_collider.shape.radius, Color(0, 1, 0), false, 1)
+	draw_circle(Vector2.ZERO, attack_range_area_collider.shape.radius, Color(1, 0, 0), false, 1)
 
 func _ready():
 	vision_area = vision_area if vision_area else get_node("VisionRange")
