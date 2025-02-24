@@ -8,7 +8,7 @@
 [ext_resource type="PackedScene" uid="uid://xm5q2u0eyi18" path="res://scenes/objects/Guard.tscn" id="3_wl0ts"]
 [ext_resource type="Texture2D" uid="uid://dn1p6eken1y1h" path="res://sprites/white.png" id="4_2x5w2"]
 [ext_resource type="PackedScene" uid="uid://cyx5ih6co1r7g" path="res://scenes/rooms/Cave3.tscn" id="4_a4xv0"]
-[ext_resource type="PackedScene" uid="uid://bi1w88uyagusu" path="res://scenes/objects/Rascal.tscn" id="4_ssa86"]
+[ext_resource type="PackedScene" uid="uid://c2q1hjxewlymt" path="res://scenes/objects/Rascal.tscn" id="4_ssa86"]
 [ext_resource type="PackedScene" uid="uid://bnjhde0rupycn" path="res://scenes/rooms/Cave4.tscn" id="5_6qgiq"]
 [ext_resource type="Script" path="res://scripts/ui/GameOver.gd" id="5_fnvnq"]
 [ext_resource type="PackedScene" uid="uid://dtfc8yl5uikn1" path="res://scenes/rooms/Cave1.tscn" id="6_w6xps"]

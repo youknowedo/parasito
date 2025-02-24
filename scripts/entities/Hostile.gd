@@ -1,6 +1,7 @@
 extends Entity
 class_name Hostile
 
+@export var raycast: RayCast2D
 @export var vision_area: Area2D
 @export var vision_area_collider: CollisionShape2D
 @export var attack_range_area: Area2D
@@ -15,6 +16,10 @@ var attack_target: Player = null
 func _draw():
 	draw_circle(Vector2.ZERO, vision_area_collider.shape.radius, Color(0, 1, 0), false, 1)
 	draw_circle(Vector2.ZERO, attack_range_area_collider.shape.radius, Color(1, 0, 0), false, 1)
+	draw_line(Vector2.ZERO, raycast.target_position, Color(0, 0, 1))
+
+func _on_draw():
+	pass
 
 func _ready():
 	vision_area = vision_area if vision_area else get_node("VisionRange")
@@ -35,7 +40,7 @@ func on_body_entered_vision_range(body: Node2D):
 		return
 	
 	attack_target = body
-	collision_mask = 0b0100
+	collision_mask = 0b0101
 
 	_on_body_entered_vision_range(body)
 
@@ -47,7 +52,7 @@ func on_body_exited_vision_range(body: Node2D):
 		return
 	
 	attack_target = null
-	collision_mask = 0b0010
+	collision_mask = 0b0011
 
 	_on_body_exited_vision_range(body)
 
