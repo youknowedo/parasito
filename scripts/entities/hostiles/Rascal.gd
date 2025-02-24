@@ -39,6 +39,7 @@ func _process(delta: float):
 		raycast.target_position = to_local(attack_target.global_position)
 		if raycast.is_colliding():
 			var collider = raycast.get_collider()
+			raycast_collision_point = to_local(raycast.get_collision_point())
 			if collider != attack_target:
 				return
 
@@ -46,6 +47,8 @@ func _process(delta: float):
 		velocity = direction * speed * delta
 		move_and_slide()
 		return true
+	else:
+		raycast.target_position = Vector2.ZERO
 
 	return false
 
