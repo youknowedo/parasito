@@ -72,12 +72,12 @@ func _on_body_entered(body: Node2D) -> void:
 	if !body.is_in_group("host"):
 		return
 
+	position = body.global_position
+	actual_position = position
 	host = body
 	_on_health_set(health, host.health)
 	collision_layer = 0b0100
 	host.occupier = self
-	position = body.global_position
-	actual_position = position
 
 	is_lunging = false
 	lunge_timer = 0.0

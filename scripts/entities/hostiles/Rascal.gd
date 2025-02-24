@@ -11,6 +11,7 @@ var lunge_direction = Vector2.ZERO
 var charging = false
 
 func _process(delta: float):
+	queue_redraw()
 	if is_lunging:
 		lunge_timer -= delta
 		if lunge_timer <= 0:
@@ -34,6 +35,12 @@ func _process(delta: float):
 				lunge_timer = lunge_duration
 
 			return
+
+		raycast.target_position = to_local(attack_target.global_position)
+		if raycast.is_colliding():
+			var collider = raycast.get_collider()
+			if collider != attack_target:
+				return
 
 		var direction = (attack_target.global_position - global_position).normalized()
 		velocity = direction * speed * delta
