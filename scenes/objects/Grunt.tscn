@@ -1,7 +1,12 @@
-[gd_scene load_steps=6 format=3 uid="uid://xm5q2u0eyi18"]
+[gd_scene load_steps=11 format=3 uid="uid://xm5q2u0eyi18"]
 
-[ext_resource type="Script" path="res://scripts/entities/hostiles/hosts/Guard.gd" id="1_qbgcj"]
+[ext_resource type="Script" path="res://scripts/entities/hostiles/hosts/Grunt.gd" id="1_qbgcj"]
 [ext_resource type="Texture2D" uid="uid://bog42spoatx13" path="res://sprites/guard.png" id="2_hgvo4"]
+[ext_resource type="Script" path="res://scripts/state_machines/StateMachine.gd" id="3_qoy2y"]
+[ext_resource type="Script" path="res://scripts/state_machines/states/grunt/RoamingState.gd" id="4_57af4"]
+[ext_resource type="Script" path="res://scripts/state_machines/states/grunt/ChasingState.gd" id="5_tuv3r"]
+[ext_resource type="Script" path="res://scripts/state_machines/states/grunt/PIdleState.gd" id="6_e5nbf"]
+[ext_resource type="Script" path="res://scripts/state_machines/states/grunt/PMovingState.gd" id="7_s5ak0"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_gs4fm"]
 size = Vector2(16, 16)
@@ -12,7 +17,7 @@ radius = 201.022
 [sub_resource type="CircleShape2D" id="CircleShape2D_xw4eo"]
 radius = 20.6155
 
-[node name="Guard" type="CharacterBody2D" node_paths=PackedStringArray("raycast", "vision_area", "vision_area_collider", "attack_range_area", "attack_range_area_collider") groups=["host"]]
+[node name="Grunt" type="CharacterBody2D" node_paths=PackedStringArray("raycast", "vision_area", "vision_area_collider", "attack_range_area", "attack_range_area_collider") groups=["host"]]
 collision_layer = 4
 collision_mask = 5
 script = ExtResource("1_qbgcj")
@@ -46,6 +51,22 @@ shape = SubResource("CircleShape2D_xw4eo")
 [node name="RayCast2D" type="RayCast2D" parent="."]
 target_position = Vector2(0, 0)
 collision_mask = 7
+
+[node name="StateMachine" type="Node" parent="." node_paths=PackedStringArray("initial_state")]
+script = ExtResource("3_qoy2y")
+initial_state = NodePath("Roaming")
+
+[node name="Roaming" type="Node" parent="StateMachine"]
+script = ExtResource("4_57af4")
+
+[node name="Chasing" type="Node" parent="StateMachine"]
+script = ExtResource("5_tuv3r")
+
+[node name="PIdle" type="Node" parent="StateMachine"]
+script = ExtResource("6_e5nbf")
+
+[node name="PMoving" type="Node" parent="StateMachine"]
+script = ExtResource("7_s5ak0")
 
 [connection signal="body_entered" from="VisionRange" to="." method="_on_body_entered_vision_range"]
 [connection signal="body_exited" from="VisionRange" to="." method="_on_body_exited_vision_range"]

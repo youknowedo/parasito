@@ -5,6 +5,7 @@ class_name Host
 var occupier: Player = null
 
 func _process(delta):
+	queue_redraw()
 	if !process_and_skip(delta):
 		if !occupier:
 			return
