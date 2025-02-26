@@ -20,7 +20,8 @@ func init_room() -> void:
 
 	current_room = rooms[current_room_index].instantiate()
 	current_room.position = Vector2.ZERO
-	player.actual_position = current_room.player_spawn_point.position
+	player.position = current_room.player_spawn_point.position
+	player.actual_position = player.position
 	current_room.enemies = enemies
 	exit_area.position = current_room.exit_point.position
 

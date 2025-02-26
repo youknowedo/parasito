@@ -1,7 +1,7 @@
 extends Host
 
 @export var attack_damage = 5
-@export var dash_force = 500.0
+@export var dash_force = 8000.0
 @export var dash_duration = 0.2
 
 var is_dashing = false
@@ -36,7 +36,6 @@ func process_and_skip(delta: float) -> bool:
 
 		var direction = (attack_target.global_position - global_position).normalized()
 		velocity = direction * speed * delta
-		print(collision_mask)
 		move_and_slide()
 		return true
 	else:
