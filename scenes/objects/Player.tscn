@@ -1,7 +1,13 @@
-[gd_scene load_steps=5 format=3 uid="uid://qyb5nrgqndmu"]
+[gd_scene load_steps=11 format=3 uid="uid://qyb5nrgqndmu"]
 
 [ext_resource type="Script" path="res://scripts/entities/Player.gd" id="1_yndod"]
 [ext_resource type="Texture2D" uid="uid://vbpuqie36xy6" path="res://sprites/parasite.png" id="2_tdph3"]
+[ext_resource type="Script" path="res://scripts/state_machines/StateMachine.gd" id="3_qlddb"]
+[ext_resource type="Script" path="res://scripts/state_machines/states/player/IdleState.gd" id="4_ywqco"]
+[ext_resource type="Script" path="res://scripts/state_machines/states/player/MovingState.gd" id="5_b7u2i"]
+[ext_resource type="Script" path="res://scripts/state_machines/states/player/LungingState.gd" id="6_ojp0b"]
+[ext_resource type="Script" path="res://scripts/state_machines/states/player/Possessing.gd" id="7_ekumq"]
+[ext_resource type="Script" path="res://scripts/state_machines/states/player/DeadState.gd" id="8_n4knn"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_vvgu1"]
 size = Vector2(8, 8)
@@ -9,10 +15,10 @@ size = Vector2(8, 8)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ua5g8"]
 size = Vector2(4, 4)
 
-[node name="Player" type="CharacterBody2D" groups=["player"]]
+[node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("state_machine") groups=["player"]]
 collision_layer = 2
 script = ExtResource("1_yndod")
-lunge_force = 8000.0
+state_machine = NodePath("StateMachine")
 speed = 1000.0
 max_health = 10
 health = 10
@@ -35,4 +41,24 @@ shape = SubResource("RectangleShape2D_ua5g8")
 
 [node name="Camera2D" type="Camera2D" parent="."]
 
-[connection signal="body_entered" from="Area2D" to="." method="_on_body_entered"]
+[node name="StateMachine" type="Node" parent="." node_paths=PackedStringArray("initial_state")]
+script = ExtResource("3_qlddb")
+initial_state = NodePath("Idle")
+
+[node name="Idle" type="Node" parent="StateMachine"]
+script = ExtResource("4_ywqco")
+
+[node name="Moving" type="Node" parent="StateMachine"]
+script = ExtResource("5_b7u2i")
+
+[node name="Lunging" type="Node" parent="StateMachine"]
+script = ExtResource("6_ojp0b")
+lunge_force = 8000.0
+
+[node name="Possessing" type="Node" parent="StateMachine"]
+script = ExtResource("7_ekumq")
+
+[node name="Dead" type="Node" parent="StateMachine"]
+script = ExtResource("8_n4knn")
+
+[connection signal="body_entered" from="Area2D" to="StateMachine/Lunging" method="_on_body_entered"]
