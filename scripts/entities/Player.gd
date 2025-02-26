@@ -19,5 +19,5 @@ func _on_health_set(_new_health: int, _max_health: int) -> void:
 
 func _on_damage():
 	if health <= 0:
-		state_machine._transition_to_next_state("Dead")
+		state_machine.change_state("Dead")
 		died.emit()
