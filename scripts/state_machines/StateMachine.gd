@@ -1,6 +1,8 @@
 class_name StateMachine extends Node
 
 @export var initial_state: State = null
+@export var animation_player: AnimationPlayer = null
+@export var sprite: Sprite2D = null
 
 @onready var state: State = (func get_initial_state() -> State:
 	return initial_state if initial_state != null else get_child(0)
@@ -10,6 +12,7 @@ class_name StateMachine extends Node
 func _ready() -> void:
 	for state_node: State in find_children("*", "State"):
 		state_node.finished.connect(change_state)
+		state_node.state_machine = self
 
 	await owner.ready
 	state.enter("")
