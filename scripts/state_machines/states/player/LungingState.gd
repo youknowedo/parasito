@@ -13,6 +13,9 @@ func enter(_previous_state_path: String, _data := {}) -> void:
 
     var mouse_position = player.get_global_mouse_position()
     lunge_direction = (mouse_position - player.position).normalized()
+    var angle = atan2(lunge_direction.y, lunge_direction.x)
+    var rounded_angle = (PI / 4) * round(angle / (PI / 4))
+    lunge_direction = Vector2(cos(rounded_angle), sin(rounded_angle))
 
     if player.host:
         player.host.occupier = null

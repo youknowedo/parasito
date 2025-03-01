@@ -1,5 +1,8 @@
 extends PlayerState
 
+func enter(_previous: String, _data: Dictionary = {}):
+    state_machine.animation_player.play("Idle")
+
 func update(_delta: float):
     if Input.is_action_just_pressed("tertiary_action"):
         finished.emit(LUNGING)

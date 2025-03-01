@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://xm5q2u0eyi18"]
+[gd_scene load_steps=15 format=3 uid="uid://xm5q2u0eyi18"]
 
 [ext_resource type="Script" path="res://scripts/entities/hostiles/hosts/Grunt.gd" id="1_qbgcj"]
 [ext_resource type="Texture2D" uid="uid://bog42spoatx13" path="res://sprites/guard.png" id="2_hgvo4"]
@@ -7,6 +7,73 @@
 [ext_resource type="Script" path="res://scripts/state_machines/states/grunt/ChasingState.gd" id="5_tuv3r"]
 [ext_resource type="Script" path="res://scripts/state_machines/states/grunt/PIdleState.gd" id="6_e5nbf"]
 [ext_resource type="Script" path="res://scripts/state_machines/states/grunt/PMovingState.gd" id="7_s5ak0"]
+
+[sub_resource type="Animation" id="Animation_kwl5b"]
+resource_name = "Idle"
+length = 2.0
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Guard:frame_coords")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [Vector2i(0, 3), Vector2i(1, 3)]
+}
+
+[sub_resource type="Animation" id="Animation_heage"]
+resource_name = "Moving"
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Guard:frame_coords")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.25, 0.5, 0.733333),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [Vector2i(0, 0), Vector2i(1, 0), Vector2i(2, 0), Vector2i(3, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_06xbn"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Guard:frame_coords")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [Vector2i(0, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Guard:flip_h")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_dyjh3"]
+_data = {
+"Idle": SubResource("Animation_kwl5b"),
+"Moving": SubResource("Animation_heage"),
+"RESET": SubResource("Animation_06xbn")
+}
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_gs4fm"]
 size = Vector2(16, 16)
@@ -30,8 +97,14 @@ attack_range_area_collider = NodePath("AttackRange/CollisionShape2D")
 [node name="Guard" type="Sprite2D" parent="."]
 texture_filter = 1
 texture = ExtResource("2_hgvo4")
-region_enabled = true
+hframes = 4
+vframes = 11
 region_rect = Rect2(0, 0, 32, 32)
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_dyjh3")
+}
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_gs4fm")
@@ -52,9 +125,11 @@ shape = SubResource("CircleShape2D_xw4eo")
 target_position = Vector2(0, 0)
 collision_mask = 7
 
-[node name="StateMachine" type="Node" parent="." node_paths=PackedStringArray("initial_state")]
+[node name="StateMachine" type="Node" parent="." node_paths=PackedStringArray("initial_state", "animation_player", "sprite")]
 script = ExtResource("3_qoy2y")
 initial_state = NodePath("Roaming")
+animation_player = NodePath("../AnimationPlayer")
+sprite = NodePath("../Guard")
 
 [node name="Roaming" type="Node" parent="StateMachine"]
 script = ExtResource("4_57af4")

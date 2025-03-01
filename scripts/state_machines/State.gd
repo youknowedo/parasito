@@ -1,5 +1,7 @@
 class_name State extends Node
 
+var state_machine: StateMachine = null
+
 signal finished(_next_state_path: String, _data: Dictionary)
 
 func handle_input(_event: InputEvent) -> void:
