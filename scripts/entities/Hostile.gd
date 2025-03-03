@@ -16,7 +16,7 @@ var raycast_collision_point = Vector2.ZERO
 
 func _draw():
 	draw_circle(Vector2.ZERO, vision_area_collider.shape.radius, Color(0, 1, 0), false, 1)
-	draw_circle(Vector2.ZERO, attack_range_area_collider.shape.radius, Color(1, 0, 0), false, 1)
+	draw_circle(attack_range_area.position, attack_range_area_collider.shape.radius, Color(1, 0, 0), false, 1)
 	draw_line(Vector2.ZERO, raycast_collision_point, Color(0, 0, 1))
 
 func _on_draw():
