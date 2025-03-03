@@ -95,6 +95,7 @@ size = Vector2(4, 4)
 [node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("state_machine") groups=["player"]]
 collision_layer = 2
 script = ExtResource("1_yndod")
+passive_damage_timer_duration = null
 state_machine = NodePath("StateMachine")
 speed = 1000.0
 max_health = 10

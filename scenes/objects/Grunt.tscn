@@ -102,7 +102,7 @@ radius = 201.022
 [sub_resource type="CircleShape2D" id="CircleShape2D_mjcda"]
 radius = 8.5
 
-[node name="Grunt" type="CharacterBody2D" node_paths=PackedStringArray("raycast", "vision_area", "vision_area_collider", "attack_range_area", "attack_range_area_collider") groups=["host"]]
+[node name="Grunt" type="CharacterBody2D" node_paths=PackedStringArray("raycast", "vision_area", "vision_area_collider", "attack_range_area", "attack_range_area_collider", "state_machine") groups=["host"]]
 collision_layer = 4
 collision_mask = 5
 script = ExtResource("1_qbgcj")
@@ -111,6 +111,7 @@ vision_area = NodePath("VisionRange")
 vision_area_collider = NodePath("VisionRange/CollisionShape2D")
 attack_range_area = NodePath("AttackRange")
 attack_range_area_collider = NodePath("AttackRange/CollisionShape2D")
+state_machine = NodePath("StateMachine")
 
 [node name="Guard" type="Sprite2D" parent="."]
 texture_filter = 1

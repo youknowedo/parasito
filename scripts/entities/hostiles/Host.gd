@@ -1,8 +1,7 @@
 extends Hostile
 class_name Host
 
-
-var occupier: Player = null
+var occupier: Entity = null
 
 func _process(delta):
 	queue_redraw()
@@ -32,3 +31,9 @@ func primary_action():
 	pass
 func secondary_action():
 	pass
+
+func _on_damaged(by: Entity):
+	if by == occupier:
+		return
+
+	attack_target = by

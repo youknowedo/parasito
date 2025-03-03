@@ -1,6 +1,6 @@
 extends Node2D
 
-@export var player: Player
+@export var player: Entity
 @export var rooms: Array[PackedScene] = []
 @export var enemies: Array[PackedScene] = []
 

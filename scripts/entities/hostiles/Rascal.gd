@@ -52,9 +52,9 @@ func _process(delta: float):
 
 	return false
 
-func _on_body_entered_inside_area(body: Player) -> void:
+func _on_body_entered_inside_area(body: Entity) -> void:
 	if !body.is_in_group("player"):
 		return
 
-	body.damage(attack_damage)
+	body.damage(attack_damage, self)
 	queue_free()

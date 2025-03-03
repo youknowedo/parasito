@@ -11,7 +11,7 @@ class_name Hostile
 @onready var attack_timer = attack_wait_time
 
 var in_attack_range = false
-var attack_target: Player = null
+var attack_target: Entity = null
 var raycast_collision_point = Vector2.ZERO
 
 func _draw():
@@ -81,3 +81,6 @@ func on_body_exited_attack_range(body: Node2D):
 
 func _on_body_exited_attack_range(_body: Node2D):
 	pass
+
+func _on_damaged(by: Entity):
+	attack_target = by
