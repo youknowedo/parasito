@@ -33,6 +33,8 @@ func secondary_action():
 	pass
 
 func _on_damaged(by: Entity):
+	if by == self:
+		return
 	if by == occupier:
 		return
 

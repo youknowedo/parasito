@@ -40,7 +40,9 @@ func exit() -> void:
     player.collision_mask = 0b0111
 
 func _on_body_entered(body: Node2D) -> void:
-    print("body entered")
+    if player.host:
+        return
+    
     if !body.is_in_group("host"):
         return
 

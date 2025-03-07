@@ -1,6 +1,7 @@
 extends GruntState
 
 func enter(_previous: String, _data: Dictionary = {}):
+    state_machine.animation_player.stop()
     state_machine.animation_player.play("Moving")
 
 func physics_update(_delta: float):
@@ -26,15 +27,14 @@ func physics_update(_delta: float):
     # Convert direction to 8 directions
     var angle = atan2(direction.y, direction.x)
     var rounded_angle = (PI / 4) * round(angle / (PI / 4))
-    direction = Vector2(cos(rounded_angle), sin(rounded_angle))
+    grunt.attack_direction = Vector2(cos(rounded_angle), sin(rounded_angle))
+    grunt.attack_range_area.position = grunt.attack_direction * 4
     if cos(angle) > 0:
         state_machine.sprite.flip_h = false
-        grunt.attack_range_area.position = Vector2(4, 0)
-    else:
+    elif cos(angle) < 0:
         state_machine.sprite.flip_h = true
-        grunt.attack_range_area.position = Vector2(-4, 0)
 
-    grunt.velocity = direction * grunt.speed * _delta
+    grunt.velocity = grunt.attack_direction * grunt.speed * _delta
     grunt.move_and_slide()
 
 func exit():

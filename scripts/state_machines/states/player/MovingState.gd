@@ -1,6 +1,7 @@
 extends PlayerState
 
 func enter(_previous: String, _data: Dictionary = {}):
+    state_machine.animation_player.stop()
     state_machine.animation_player.play("Moving")
 
 func physics_update(_delta: float) -> void:

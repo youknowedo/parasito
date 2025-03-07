@@ -1,6 +1,7 @@
 extends GruntState
 
 func enter(_previous: String, _data: Dictionary = {}):
+    state_machine.animation_player.stop()
     state_machine.animation_player.play("Idle")
 
 func update(_delta: float):

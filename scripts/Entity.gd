@@ -10,6 +10,7 @@ signal health_set(health: int, max_health: int)
 @export var health = 100
 
 var actual_position: Vector2
+var attack_direction: Vector2
 
 func _ready():
 	health_changed.emit(health, health)

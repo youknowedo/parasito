@@ -83,4 +83,7 @@ func _on_body_exited_attack_range(_body: Node2D):
 	pass
 
 func _on_damaged(by: Entity):
+	if by == self:
+		return
+	
 	attack_target = by

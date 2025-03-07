@@ -5,6 +5,7 @@ extends GruntState
 var target = random_inside_unit_circle() * roaming_radius
 
 func enter(_previous: String, _data: Dictionary = {}):
+	state_machine.animation_player.stop()
 	state_machine.animation_player.play("Moving")
 
 func update(_delta: float):
