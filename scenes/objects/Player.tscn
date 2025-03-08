@@ -92,7 +92,7 @@ size = Vector2(8, 8)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ua5g8"]
 size = Vector2(4, 4)
 
-[node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("state_machine") groups=["player"]]
+[node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("state_machine") groups=["entity", "player"]]
 collision_layer = 2
 script = ExtResource("1_yndod")
 state_machine = NodePath("StateMachine")

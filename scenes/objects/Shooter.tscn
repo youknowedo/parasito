@@ -1,13 +1,14 @@
-[gd_scene load_steps=21 format=3 uid="uid://xm5q2u0eyi18"]
+[gd_scene load_steps=22 format=3 uid="uid://ck7bvi1c86db0"]
 
-[ext_resource type="Script" path="res://scripts/entities/hostiles/hosts/Grunt.gd" id="1_qbgcj"]
-[ext_resource type="Texture2D" uid="uid://y8mtj51jrn5x" path="res://sprites/grunt.png" id="2_xwuck"]
-[ext_resource type="Script" path="res://scripts/state_machines/StateMachine.gd" id="3_qoy2y"]
-[ext_resource type="Script" path="res://scripts/state_machines/states/grunt/RoamingState.gd" id="4_57af4"]
-[ext_resource type="Script" path="res://scripts/state_machines/states/grunt/ChasingState.gd" id="5_tuv3r"]
-[ext_resource type="Script" path="res://scripts/state_machines/states/grunt/PIdleState.gd" id="6_e5nbf"]
-[ext_resource type="Script" path="res://scripts/state_machines/states/grunt/PMovingState.gd" id="7_s5ak0"]
-[ext_resource type="Script" path="res://scripts/state_machines/states/grunt/AttackingState.gd" id="8_np4fa"]
+[ext_resource type="Script" path="res://scripts/entities/hostiles/hosts/Shooter.gd" id="1_5c6ca"]
+[ext_resource type="Texture2D" uid="uid://bog42spoatx13" path="res://sprites/shooter.png" id="2_hh4wt"]
+[ext_resource type="Script" path="res://scripts/state_machines/StateMachine.gd" id="3_71t0h"]
+[ext_resource type="Script" path="res://scripts/state_machines/states/shooter/RoamingState.gd" id="4_b3ham"]
+[ext_resource type="Script" path="res://scripts/state_machines/states/shooter/ChasingState.gd" id="5_1lbs3"]
+[ext_resource type="Script" path="res://scripts/state_machines/states/shooter/PIdleState.gd" id="6_tqney"]
+[ext_resource type="Script" path="res://scripts/state_machines/states/shooter/PMovingState.gd" id="7_hrlbp"]
+[ext_resource type="Script" path="res://scripts/state_machines/states/shooter/AttackingState.gd" id="8_dverg"]
+[ext_resource type="PackedScene" uid="uid://bk5brchyxcvhu" path="res://scenes/objects/Projectile.tscn" id="9_bd1nq"]
 
 [sub_resource type="Animation" id="Animation_bxurt"]
 resource_name = "Attacking"
@@ -40,7 +41,7 @@ tracks/0/keys = {
 "times": PackedFloat32Array(0, 0.1, 0.2, 0.3),
 "transitions": PackedFloat32Array(1, 1, 1, 1),
 "update": 2,
-"values": [Vector2i(0, 7), Vector2i(1, 8), Vector2i(2, 8), Vector2i(3, 8)]
+"values": [Vector2i(0, 8), Vector2i(1, 8), Vector2i(2, 8), Vector2i(3, 8)]
 }
 
 [sub_resource type="Animation" id="Animation_ypvfl"]
@@ -57,7 +58,7 @@ tracks/0/keys = {
 "times": PackedFloat32Array(0, 0.1, 0.2, 0.3),
 "transitions": PackedFloat32Array(1, 1, 1, 1),
 "update": 2,
-"values": [Vector2i(0, 6), Vector2i(1, 7), Vector2i(2, 7), Vector2i(3, 7)]
+"values": [Vector2i(0, 7), Vector2i(1, 7), Vector2i(2, 7), Vector2i(3, 7)]
 }
 
 [sub_resource type="Animation" id="Animation_xrol3"]
@@ -170,15 +171,15 @@ _data = {
 size = Vector2(16, 16)
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_oljxs"]
-radius = 201.022
+radius = 84.0
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_mjcda"]
-radius = 8.5
+radius = 64.0
 
-[node name="Grunt" type="CharacterBody2D" node_paths=PackedStringArray("text", "raycast", "vision_area", "vision_area_collider", "attack_range_area", "attack_range_area_collider", "state_machine") groups=["entity", "host"]]
+[node name="Shooter" type="CharacterBody2D" node_paths=PackedStringArray("text", "raycast", "vision_area", "vision_area_collider", "attack_range_area", "attack_range_area_collider", "state_machine") groups=["entity", "host"]]
 collision_layer = 4
 collision_mask = 5
-script = ExtResource("1_qbgcj")
+script = ExtResource("1_5c6ca")
 text = NodePath("RichTextLabel")
 raycast = NodePath("RayCast2D")
 vision_area = NodePath("VisionRange")
@@ -190,7 +191,7 @@ speed = 1000.0
 
 [node name="Sprite" type="Sprite2D" parent="."]
 texture_filter = 1
-texture = ExtResource("2_xwuck")
+texture = ExtResource("2_hh4wt")
 hframes = 4
 vframes = 13
 region_rect = Rect2(0, 0, 32, 32)
@@ -220,25 +221,26 @@ target_position = Vector2(0, 0)
 collision_mask = 7
 
 [node name="StateMachine" type="Node" parent="." node_paths=PackedStringArray("initial_state", "animation_player", "sprite")]
-script = ExtResource("3_qoy2y")
+script = ExtResource("3_71t0h")
 initial_state = NodePath("Roaming")
 animation_player = NodePath("../AnimationPlayer")
 sprite = NodePath("../Sprite")
 
 [node name="Roaming" type="Node" parent="StateMachine"]
-script = ExtResource("4_57af4")
+script = ExtResource("4_b3ham")
 
 [node name="Chasing" type="Node" parent="StateMachine"]
-script = ExtResource("5_tuv3r")
+script = ExtResource("5_1lbs3")
 
 [node name="PIdle" type="Node" parent="StateMachine"]
-script = ExtResource("6_e5nbf")
+script = ExtResource("6_tqney")
 
 [node name="PMoving" type="Node" parent="StateMachine"]
-script = ExtResource("7_s5ak0")
+script = ExtResource("7_hrlbp")
 
 [node name="Attacking" type="Node" parent="StateMachine"]
-script = ExtResource("8_np4fa")
+script = ExtResource("8_dverg")
+projectile = ExtResource("9_bd1nq")
 
 [node name="RichTextLabel" type="RichTextLabel" parent="."]
 offset_right = 40.0
