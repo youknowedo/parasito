@@ -1,13 +1,18 @@
-[gd_scene load_steps=14 format=3 uid="uid://ci76og8wvro2o"]
+[gd_scene load_steps=15 format=3 uid="uid://ci76og8wvro2o"]
 
-[ext_resource type="Script" uid="uid://bahdgceedgfv4" path="res://scenes/Master.gd" id="1_0varo"]
+[ext_resource type="Script" uid="uid://bahdgceedgfv4" path="res://scripts/Master.gd" id="1_0varo"]
 [ext_resource type="PackedScene" uid="uid://qyb5nrgqndmu" path="res://scenes/objects/Player.tscn" id="1_4wp0b"]
 [ext_resource type="Script" uid="uid://c341c8wvmyxxq" path="res://scripts/ui/Health.gd" id="2_ug3q2"]
+[ext_resource type="Script" uid="uid://dll8m3fxs5ifw" path="res://scripts/Region.gd" id="2_wpumy"]
 [ext_resource type="Texture2D" uid="uid://dn1p6eken1y1h" path="res://sprites/white.png" id="4_2x5w2"]
+[ext_resource type="PackedScene" uid="uid://c2q1hjxewlymt" path="res://scenes/objects/Rascal.tscn" id="4_8brbc"]
 [ext_resource type="PackedScene" uid="uid://c2q1hjxewlymt" path="res://scenes/objects/Rascal.tscn" id="4_ty6vi"]
 [ext_resource type="Script" uid="uid://dg0jwrgjlkhv1" path="res://scripts/ui/GameOver.gd" id="5_fnvnq"]
+[ext_resource type="PackedScene" uid="uid://dlondiawiw4sf" path="res://scenes/rooms/Cave2.tscn" id="5_wxvuj"]
+[ext_resource type="PackedScene" uid="uid://xm5q2u0eyi18" path="res://scenes/objects/Grunt.tscn" id="6_r6f15"]
 [ext_resource type="PackedScene" uid="uid://xm5q2u0eyi18" path="res://scenes/objects/Grunt.tscn" id="5_t1fx7"]
 [ext_resource type="PackedScene" uid="uid://dtfc8yl5uikn1" path="res://scenes/rooms/Cave1.tscn" id="6_w6xps"]
+[ext_resource type="PackedScene" uid="uid://cyx5ih6co1r7g" path="res://scenes/rooms/Cave3.tscn" id="7_0opgw"]
 [ext_resource type="Texture2D" uid="uid://h1m41ppuobkf" path="res://sprites/UI.png" id="7_p3gu3"]
 [ext_resource type="PackedScene" uid="uid://ck7bvi1c86db0" path="res://scenes/objects/Shooter.tscn" id="8_id0rc"]
 [ext_resource type="Texture2D" uid="uid://dgfbyyauysco0" path="res://sprites/font.png" id="9_nav6e"]
@@ -15,14 +20,33 @@
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_vnxwg"]
 
-[node name="Master" type="Node2D" node_paths=PackedStringArray("title_rect", "player", "exit_area")]
+[node name="Master" type="Node2D" node_paths=PackedStringArray("title_rect", "player", "regions", "exit_area")]
 texture_filter = 1
 script = ExtResource("1_0varo")
 title_rect = NodePath("CanvasLayer/Title")
 player = NodePath("Player")
-rooms = Array[PackedScene]([ExtResource("6_w6xps")])
-enemies = Array[PackedScene]([ExtResource("8_id0rc"), ExtResource("4_ty6vi"), ExtResource("5_t1fx7")])
+regions = [NodePath("Regions/Region1"), NodePath("Regions/Region2"), NodePath("Regions/Region3")]
 exit_area = NodePath("ExitArea")
+
+[node name="Regions" type="Node" parent="."]
+
+[node name="Region1" type="Node" parent="Regions"]
+script = ExtResource("2_wpumy")
+num_of_levels = 1
+rooms = Array[PackedScene]([ExtResource("6_w6xps")])
+enemies = Array[PackedScene]([ExtResource("4_8brbc")])
+
+[node name="Region2" type="Node" parent="Regions"]
+script = ExtResource("2_wpumy")
+num_of_levels = 1
+rooms = Array[PackedScene]([ExtResource("5_wxvuj")])
+enemies = Array[PackedScene]([ExtResource("6_r6f15")])
+
+[node name="Region3" type="Node" parent="Regions"]
+script = ExtResource("2_wpumy")
+num_of_levels = 1
+rooms = Array[PackedScene]([ExtResource("7_0opgw")])
+enemies = Array[PackedScene]([ExtResource("8_id0rc"), ExtResource("4_ty6vi"), ExtResource("5_t1fx7")])
 
 [node name="Player" parent="." instance=ExtResource("1_4wp0b")]
 position = Vector2(-54, -8)
