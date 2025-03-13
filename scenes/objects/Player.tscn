@@ -1,13 +1,13 @@
 [gd_scene load_steps=16 format=3 uid="uid://qyb5nrgqndmu"]
 
-[ext_resource type="Script" path="res://scripts/entities/Player.gd" id="1_yndod"]
+[ext_resource type="Script" uid="uid://drqlynuv7tduc" path="res://scripts/entities/Player.gd" id="1_yndod"]
 [ext_resource type="Texture2D" uid="uid://vbpuqie36xy6" path="res://sprites/parasite.png" id="2_tdph3"]
-[ext_resource type="Script" path="res://scripts/state_machines/StateMachine.gd" id="3_qlddb"]
-[ext_resource type="Script" path="res://scripts/state_machines/states/player/IdleState.gd" id="4_ywqco"]
-[ext_resource type="Script" path="res://scripts/state_machines/states/player/MovingState.gd" id="5_b7u2i"]
-[ext_resource type="Script" path="res://scripts/state_machines/states/player/LungingState.gd" id="6_ojp0b"]
-[ext_resource type="Script" path="res://scripts/state_machines/states/player/Possessing.gd" id="7_ekumq"]
-[ext_resource type="Script" path="res://scripts/state_machines/states/player/DeadState.gd" id="8_n4knn"]
+[ext_resource type="Script" uid="uid://2vxqf1vcaj5f" path="res://scripts/state_machines/StateMachine.gd" id="3_qlddb"]
+[ext_resource type="Script" uid="uid://2m80vu5dxgmu" path="res://scripts/state_machines/states/player/IdleState.gd" id="4_ywqco"]
+[ext_resource type="Script" uid="uid://s0u8ku4va808" path="res://scripts/state_machines/states/player/MovingState.gd" id="5_b7u2i"]
+[ext_resource type="Script" uid="uid://tq4onar0q642" path="res://scripts/state_machines/states/player/LungingState.gd" id="6_ojp0b"]
+[ext_resource type="Script" uid="uid://du8n1rdlk1kju" path="res://scripts/state_machines/states/player/Possessing.gd" id="7_ekumq"]
+[ext_resource type="Script" uid="uid://ci8td6weabxx7" path="res://scripts/state_machines/states/player/DeadState.gd" id="8_n4knn"]
 
 [sub_resource type="Animation" id="Animation_7pqvu"]
 resource_name = "Dead"
@@ -101,9 +101,9 @@ tracks/2/keys = {
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_10ewn"]
 _data = {
 "Dead": SubResource("Animation_7pqvu"),
-"Idle": SubResource("Animation_fqe6v"),
-"Moving": SubResource("Animation_d75mt"),
-"RESET": SubResource("Animation_x3msd")
+&"Idle": SubResource("Animation_fqe6v"),
+&"Moving": SubResource("Animation_d75mt"),
+&"RESET": SubResource("Animation_x3msd")
 }
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_vvgu1"]

@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=4 uid="uid://dtfc8yl5uikn1"]
 
 [ext_resource type="TileSet" uid="uid://tuw6rbxhuq2g" path="res://tilesets/Cave.tres" id="1_7ain1"]
-[ext_resource type="Script" path="res://scripts/Room.gd" id="1_ten8j"]
+[ext_resource type="Script" uid="uid://da87kel7wco1r" path="res://scripts/Room.gd" id="1_ten8j"]
 
 [node name="Cave1" type="Node2D" node_paths=PackedStringArray("exit_point", "player_spawn_point", "spawn_points")]
 script = ExtResource("1_ten8j")
