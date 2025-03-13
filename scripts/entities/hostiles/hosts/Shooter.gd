@@ -19,6 +19,5 @@ func primary_action():
 	var angle = atan2(attack_direction.y, attack_direction.x)
 	var rounded_angle = (PI / 4) * round(angle / (PI / 4))
 	attack_direction = Vector2(cos(rounded_angle), sin(rounded_angle))
-	attack_range_area.position = attack_direction * 4
 
 	state_machine.change_state("Attacking")

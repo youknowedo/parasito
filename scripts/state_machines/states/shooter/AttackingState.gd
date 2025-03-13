@@ -12,30 +12,18 @@ func enter(_previous: String, _data: Dictionary = {}):
 	if shooter.attack_direction.x > 0:
 		shooter.state_machine.sprite.flip_h = true
 	else:
+		print("flip_h false")
 		shooter.state_machine.sprite.flip_h = false
 	shooter.state_machine.animation_player.stop()
 	shooter.state_machine.animation_player.play("Idle")
 	attack_timer = attack_wait_time if !shooter.occupier else 0.0
 
 func update(_delta: float):
-	if shooter.attack_target == null:
+	if !shooter.occupier && shooter.attack_target == null:
 		finished.emit(ROAMING)
 		return
-	if shooter.occupier:
-		finished.emit(P_IDLE)
-		return
-	shooter.raycast_collision_point = shooter.to_local(shooter.attack_target.global_position)
-	if shooter.raycast.is_colliding():
-		var collider = shooter.raycast.get_collider()
-		if collider != shooter.attack_target:
-			finished.emit(ROAMING)
-
-	if shooter.attack_direction.x > 0:
-		shooter.state_machine.sprite.flip_h = false
-	else:
-		shooter.state_machine.sprite.flip_h = true
-
-	if timer_started && attack_timer >= 0:
+	
+	if (shooter.occupier || timer_started) && attack_timer >= 0:
 		attack_timer -= _delta
 	if attack_timer < 0:
 		if shooter.attack_direction.y > 0.0001:
@@ -59,7 +47,21 @@ func update(_delta: float):
 		attack_timer = attack_wait_time
 
 		return
+
+	if shooter.occupier:
+		return
 	
+	shooter.raycast_collision_point = shooter.to_local(shooter.attack_target.global_position)
+	if shooter.raycast.is_colliding():
+		var collider = shooter.raycast.get_collider()
+		if collider != shooter.attack_target:
+			finished.emit(ROAMING)
+
+	if shooter.attack_direction.x > 0:
+		shooter.state_machine.sprite.flip_h = false
+	else:
+		shooter.state_machine.sprite.flip_h = true
+
 	var direction = shooter.to_local(shooter.attack_target.global_position)
 	var angle = atan2(direction.y, direction.x)
 	var rounded_angle = (PI / 4) * round(angle / (PI / 4))
@@ -80,3 +82,13 @@ func update(_delta: float):
 		shooter.move_and_slide()
 	else:
 		timer_started = true
+
+
+func _on_animation_finished(anim_name: StringName) -> void:
+	if !anim_name.begins_with("Attacking"):
+		return
+
+	if shooter.occupier:
+		finished.emit(P_IDLE)
+	else:
+		finished.emit(ROAMING)

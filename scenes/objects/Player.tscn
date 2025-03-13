@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://qyb5nrgqndmu"]
+[gd_scene load_steps=16 format=3 uid="uid://qyb5nrgqndmu"]
 
 [ext_resource type="Script" path="res://scripts/entities/Player.gd" id="1_yndod"]
 [ext_resource type="Texture2D" uid="uid://vbpuqie36xy6" path="res://sprites/parasite.png" id="2_tdph3"]
@@ -9,8 +9,27 @@
 [ext_resource type="Script" path="res://scripts/state_machines/states/player/Possessing.gd" id="7_ekumq"]
 [ext_resource type="Script" path="res://scripts/state_machines/states/player/DeadState.gd" id="8_n4knn"]
 
+[sub_resource type="Animation" id="Animation_7pqvu"]
+resource_name = "Dead"
+length = 2.0
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Parasite:frame_coords")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.8, 1, 1.8, 2),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 1,
+"values": [Vector2i(0, 2), Vector2i(1, 2), Vector2i(2, 2), Vector2i(1, 2), Vector2i(0, 2)]
+}
+
 [sub_resource type="Animation" id="Animation_fqe6v"]
 resource_name = "Idle"
+length = 2.0
+loop_mode = 1
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -18,10 +37,10 @@ tracks/0/path = NodePath("Parasite:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
 "update": 1,
-"values": [0]
+"values": [0, 1]
 }
 
 [sub_resource type="Animation" id="Animation_d75mt"]
@@ -37,7 +56,7 @@ tracks/0/keys = {
 "times": PackedFloat32Array(0, 0.25, 0.5, 0.75),
 "transitions": PackedFloat32Array(1, 1, 1, 1),
 "update": 1,
-"values": [Vector2i(0, 0), Vector2i(1, 0), Vector2i(2, 0), Vector2i(3, 0)]
+"values": [Vector2i(0, 1), Vector2i(1, 1), Vector2i(2, 1), Vector2i(3, 1)]
 }
 
 [sub_resource type="Animation" id="Animation_x3msd"]
@@ -81,6 +100,7 @@ tracks/2/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_10ewn"]
 _data = {
+"Dead": SubResource("Animation_7pqvu"),
 "Idle": SubResource("Animation_fqe6v"),
 "Moving": SubResource("Animation_d75mt"),
 "RESET": SubResource("Animation_x3msd")
@@ -104,7 +124,7 @@ health = 10
 texture_filter = 1
 texture = ExtResource("2_tdph3")
 hframes = 4
-vframes = 2
+vframes = 3
 frame = 1
 region_rect = Rect2(0, 0, 16, 16)
 
@@ -124,6 +144,7 @@ collision_mask = 4
 shape = SubResource("RectangleShape2D_ua5g8")
 
 [node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(0, -16)
 
 [node name="StateMachine" type="Node" parent="." node_paths=PackedStringArray("initial_state", "animation_player", "sprite")]
 script = ExtResource("3_qlddb")

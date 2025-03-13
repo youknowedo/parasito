@@ -35,6 +35,10 @@ func _ready():
 	attack_range_area.connect("body_exited", on_body_exited_attack_range)
 
 func _process(_delta: float) -> void:
+	if attack_target && attack_target.health <= 0:
+		attack_target = null
+		collision_mask = 0b0011
+
 	queue_redraw()
 
 func on_body_entered_vision_range(body: Node2D):

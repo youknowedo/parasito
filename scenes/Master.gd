@@ -1,20 +1,25 @@
 extends Node2D
 
+@export var title_rect: TextureRect
 @export var player: Entity
 @export var rooms: Array[PackedScene] = []
 @export var enemies: Array[PackedScene] = []
 
 @export var exit_area: Area2D
 
+var started = false
 var current_room_index = -1
 var current_room: Room
 
-func _ready() -> void:
-	init_room()
+func _process(delta: float) -> void:
+	if !started && Input.is_action_just_pressed("primary_action"):
+		title_rect.visible = false
+		started = true
+		init_room()
 
 func init_room() -> void:
 	var i = randi() % rooms.size()
-	while i == current_room_index:
+	while rooms.size() > 1 && i == current_room_index:
 		i = randi() % rooms.size()
 	current_room_index = i
 

@@ -4,6 +4,10 @@ class_name Host
 var occupier: Entity = null
 
 func _process(delta):
+	if attack_target && attack_target.health <= 0:
+		attack_target = null
+		collision_mask = 0b0011
+		
 	queue_redraw()
 	if !process_and_skip(delta):
 		if !occupier:
