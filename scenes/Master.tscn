@@ -1,11 +1,11 @@
 [gd_scene load_steps=10 format=3 uid="uid://ci76og8wvro2o"]
 
-[ext_resource type="Script" path="res://scenes/Master.gd" id="1_0varo"]
+[ext_resource type="Script" uid="uid://bahdgceedgfv4" path="res://scenes/Master.gd" id="1_0varo"]
 [ext_resource type="PackedScene" uid="uid://qyb5nrgqndmu" path="res://scenes/objects/Player.tscn" id="1_4wp0b"]
-[ext_resource type="Script" path="res://scripts/ui/Health.gd" id="2_ug3q2"]
+[ext_resource type="Script" uid="uid://c341c8wvmyxxq" path="res://scripts/ui/Health.gd" id="2_ug3q2"]
 [ext_resource type="Texture2D" uid="uid://bhthqxakvn72r" path="res://sprites/HUD.png" id="3_gnscs"]
 [ext_resource type="Texture2D" uid="uid://dn1p6eken1y1h" path="res://sprites/white.png" id="4_2x5w2"]
-[ext_resource type="Script" path="res://scripts/ui/GameOver.gd" id="5_fnvnq"]
+[ext_resource type="Script" uid="uid://dg0jwrgjlkhv1" path="res://scripts/ui/GameOver.gd" id="5_fnvnq"]
 [ext_resource type="PackedScene" uid="uid://dtfc8yl5uikn1" path="res://scenes/rooms/Cave1.tscn" id="6_w6xps"]
 [ext_resource type="PackedScene" uid="uid://ck7bvi1c86db0" path="res://scenes/objects/Shooter.tscn" id="8_id0rc"]
 

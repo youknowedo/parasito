@@ -1,6 +1,6 @@
 [gd_scene load_steps=7 format=3 uid="uid://c2q1hjxewlymt"]
 
-[ext_resource type="Script" path="res://scripts/entities/hostiles/Rascal.gd" id="1_cv6ig"]
+[ext_resource type="Script" uid="uid://c8qevsoyex53o" path="res://scripts/entities/hostiles/Rascal.gd" id="1_cv6ig"]
 [ext_resource type="Texture2D" uid="uid://cuox7larjd4s6" path="res://sprites/rascal.png" id="2_5vg2j"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_gs4fm"]

@@ -1,13 +1,13 @@
 [gd_scene load_steps=22 format=3 uid="uid://ck7bvi1c86db0"]
 
-[ext_resource type="Script" path="res://scripts/entities/hostiles/hosts/Shooter.gd" id="1_5c6ca"]
+[ext_resource type="Script" uid="uid://cf6iwhq52trvy" path="res://scripts/entities/hostiles/hosts/Shooter.gd" id="1_5c6ca"]
 [ext_resource type="Texture2D" uid="uid://bog42spoatx13" path="res://sprites/shooter.png" id="2_hh4wt"]
-[ext_resource type="Script" path="res://scripts/state_machines/StateMachine.gd" id="3_71t0h"]
-[ext_resource type="Script" path="res://scripts/state_machines/states/shooter/RoamingState.gd" id="4_b3ham"]
-[ext_resource type="Script" path="res://scripts/state_machines/states/shooter/ChasingState.gd" id="5_1lbs3"]
-[ext_resource type="Script" path="res://scripts/state_machines/states/shooter/PIdleState.gd" id="6_tqney"]
-[ext_resource type="Script" path="res://scripts/state_machines/states/shooter/PMovingState.gd" id="7_hrlbp"]
-[ext_resource type="Script" path="res://scripts/state_machines/states/shooter/AttackingState.gd" id="8_dverg"]
+[ext_resource type="Script" uid="uid://2vxqf1vcaj5f" path="res://scripts/state_machines/StateMachine.gd" id="3_71t0h"]
+[ext_resource type="Script" uid="uid://bckqstb3w04kn" path="res://scripts/state_machines/states/shooter/RoamingState.gd" id="4_b3ham"]
+[ext_resource type="Script" uid="uid://b671jgsjj4ons" path="res://scripts/state_machines/states/shooter/ChasingState.gd" id="5_1lbs3"]
+[ext_resource type="Script" uid="uid://jvtincj8ri32" path="res://scripts/state_machines/states/shooter/PIdleState.gd" id="6_tqney"]
+[ext_resource type="Script" uid="uid://r0qtmxnl5u6b" path="res://scripts/state_machines/states/shooter/PMovingState.gd" id="7_hrlbp"]
+[ext_resource type="Script" uid="uid://b55yhinddli8s" path="res://scripts/state_machines/states/shooter/AttackingState.gd" id="8_dverg"]
 [ext_resource type="PackedScene" uid="uid://bk5brchyxcvhu" path="res://scenes/objects/Projectile.tscn" id="9_bd1nq"]
 
 [sub_resource type="Animation" id="Animation_bxurt"]
@@ -157,14 +157,14 @@ tracks/1/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_dyjh3"]
 _data = {
-"Attacking": SubResource("Animation_bxurt"),
-"Attacking_D_Down": SubResource("Animation_23rkq"),
-"Attacking_D_Up": SubResource("Animation_ypvfl"),
-"Attacking_Down": SubResource("Animation_xrol3"),
-"Attacking_Up": SubResource("Animation_bct8o"),
-"Idle": SubResource("Animation_kwl5b"),
-"Moving": SubResource("Animation_heage"),
-"RESET": SubResource("Animation_06xbn")
+&"Attacking": SubResource("Animation_bxurt"),
+&"Attacking_D_Down": SubResource("Animation_23rkq"),
+&"Attacking_D_Up": SubResource("Animation_ypvfl"),
+&"Attacking_Down": SubResource("Animation_xrol3"),
+&"Attacking_Up": SubResource("Animation_bct8o"),
+&"Idle": SubResource("Animation_kwl5b"),
+&"Moving": SubResource("Animation_heage"),
+&"RESET": SubResource("Animation_06xbn")
 }
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_gs4fm"]
