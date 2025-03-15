@@ -100,7 +100,7 @@ tracks/2/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_10ewn"]
 _data = {
-"Dead": SubResource("Animation_7pqvu"),
+&"Dead": SubResource("Animation_7pqvu"),
 &"Idle": SubResource("Animation_fqe6v"),
 &"Moving": SubResource("Animation_d75mt"),
 &"RESET": SubResource("Animation_x3msd")
@@ -130,7 +130,7 @@ region_rect = Rect2(0, 0, 16, 16)
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
-"": SubResource("AnimationLibrary_10ewn")
+&"": SubResource("AnimationLibrary_10ewn")
 }
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]

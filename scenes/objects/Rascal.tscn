@@ -15,11 +15,12 @@ radius = 21.0
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_kt0cr"]
 size = Vector2(4, 4)
 
-[node name="Rascal" type="CharacterBody2D" node_paths=PackedStringArray("raycast", "vision_area", "vision_area_collider", "attack_range_area", "attack_range_area_collider") groups=["entity"]]
+[node name="Rascal" type="CharacterBody2D" node_paths=PackedStringArray("raycast", "raycast2", "vision_area", "vision_area_collider", "attack_range_area", "attack_range_area_collider") groups=["entity"]]
 collision_layer = 4
 collision_mask = 5
 script = ExtResource("1_cv6ig")
 raycast = NodePath("RayCast2D")
+raycast2 = NodePath("RayCast2D2")
 vision_area = NodePath("VisionRange")
 vision_area_collider = NodePath("VisionRange/CollisionShape2D")
 attack_range_area = NodePath("AttackRange")
@@ -54,6 +55,10 @@ collision_mask = 2
 shape = SubResource("RectangleShape2D_kt0cr")
 
 [node name="RayCast2D" type="RayCast2D" parent="."]
+target_position = Vector2(0, 0)
+collision_mask = 7
+
+[node name="RayCast2D2" type="RayCast2D" parent="."]
 target_position = Vector2(0, 0)
 collision_mask = 7
 

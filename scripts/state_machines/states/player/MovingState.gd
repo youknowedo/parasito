@@ -22,9 +22,9 @@ func physics_update(_delta: float) -> void:
     else:
         state_machine.sprite.flip_h = true
     
-    player.velocity = direction * player.speed * _delta
+    entity.velocity = direction * entity.speed * _delta
  
-    player.position = player.actual_position
-    player.move_and_slide()
-    player.actual_position = player.position
-    player.position = player.position.round()
+    entity.position = entity.actual_position
+    entity.move_and_slide()
+    entity.actual_position = entity.position
+    entity.position = entity.position.round()

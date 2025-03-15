@@ -1,15 +1,7 @@
-class_name ShooterState extends State
+class_name ShooterState extends HostState
 
-const ROAMING = "Roaming"
-const CHASING = "Chasing"
-const ATTACKING = "Attacking"
-const DEAD = "Dead"
-const P_IDLE = "PIdle"
-const P_MOVING = "PMoving"
+var grunt: Shooter
 
-var shooter: Shooter
-
-func _ready() -> void:
-	await owner.ready
-	shooter = owner as Shooter
-	assert(shooter != null, "The GruntState state type must be used only in the shooter scene. It needs the owner to be a Grunt node.")
+func _on_ready():
+	grunt = entity as Shooter
+	assert(grunt != null, "The ShooterState state type must be used only in the entity scene. It needs the owner to be a Shooter node.")

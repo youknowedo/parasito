@@ -3,10 +3,10 @@
 [ext_resource type="Script" uid="uid://doaebvumrt1lj" path="res://scripts/entities/hostiles/hosts/Grunt.gd" id="1_qbgcj"]
 [ext_resource type="Texture2D" uid="uid://y8mtj51jrn5x" path="res://sprites/grunt.png" id="2_xwuck"]
 [ext_resource type="Script" uid="uid://2vxqf1vcaj5f" path="res://scripts/state_machines/StateMachine.gd" id="3_qoy2y"]
-[ext_resource type="Script" uid="uid://ch110nifykvx" path="res://scripts/state_machines/states/grunt/RoamingState.gd" id="4_57af4"]
-[ext_resource type="Script" uid="uid://b2j7ne2nppfo2" path="res://scripts/state_machines/states/grunt/ChasingState.gd" id="5_tuv3r"]
-[ext_resource type="Script" uid="uid://cqm4ug0gqmbq2" path="res://scripts/state_machines/states/grunt/PIdleState.gd" id="6_e5nbf"]
-[ext_resource type="Script" uid="uid://dpp840j0sxh7b" path="res://scripts/state_machines/states/grunt/PMovingState.gd" id="7_s5ak0"]
+[ext_resource type="Script" uid="uid://bt38k0l71s801" path="res://scripts/state_machines/states/host/RoamingState.gd" id="4_fb15v"]
+[ext_resource type="Script" uid="uid://iyvuamqq8uyp" path="res://scripts/state_machines/states/host/ChasingState.gd" id="5_kpl87"]
+[ext_resource type="Script" uid="uid://8hosgct8dgpx" path="res://scripts/state_machines/states/host/PIdleState.gd" id="6_ccgb1"]
+[ext_resource type="Script" uid="uid://dsbx38lh3lgws" path="res://scripts/state_machines/states/host/PMovingState.gd" id="7_vwd7g"]
 [ext_resource type="Script" uid="uid://bdj7pkk3qt1pr" path="res://scripts/state_machines/states/grunt/AttackingState.gd" id="8_np4fa"]
 
 [sub_resource type="Animation" id="Animation_bxurt"]
@@ -273,12 +273,13 @@ radius = 201.022
 [sub_resource type="CircleShape2D" id="CircleShape2D_mjcda"]
 radius = 8.5
 
-[node name="Grunt" type="CharacterBody2D" node_paths=PackedStringArray("text", "raycast", "vision_area", "vision_area_collider", "attack_range_area", "attack_range_area_collider", "state_machine") groups=["entity", "host"]]
+[node name="Grunt" type="CharacterBody2D" node_paths=PackedStringArray("text", "raycast", "raycast2", "vision_area", "vision_area_collider", "attack_range_area", "attack_range_area_collider", "state_machine") groups=["entity", "host"]]
 collision_layer = 4
 collision_mask = 5
 script = ExtResource("1_qbgcj")
 text = NodePath("RichTextLabel")
 raycast = NodePath("RayCast2D")
+raycast2 = NodePath("RayCast2D2")
 vision_area = NodePath("VisionRange")
 vision_area_collider = NodePath("VisionRange/CollisionShape2D")
 attack_range_area = NodePath("AttackRange")
@@ -295,7 +296,7 @@ region_rect = Rect2(0, 0, 32, 32)
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
-"": SubResource("AnimationLibrary_dyjh3")
+&"": SubResource("AnimationLibrary_dyjh3")
 }
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
@@ -318,6 +319,10 @@ shape = SubResource("CircleShape2D_mjcda")
 target_position = Vector2(0, 0)
 collision_mask = 7
 
+[node name="RayCast2D2" type="RayCast2D" parent="."]
+target_position = Vector2(0, 0)
+collision_mask = 7
+
 [node name="StateMachine" type="Node" parent="." node_paths=PackedStringArray("initial_state", "animation_player", "sprite")]
 script = ExtResource("3_qoy2y")
 initial_state = NodePath("Roaming")
@@ -325,16 +330,16 @@ animation_player = NodePath("../AnimationPlayer")
 sprite = NodePath("../Sprite")
 
 [node name="Roaming" type="Node" parent="StateMachine"]
-script = ExtResource("4_57af4")
+script = ExtResource("4_fb15v")
 
 [node name="Chasing" type="Node" parent="StateMachine"]
-script = ExtResource("5_tuv3r")
+script = ExtResource("5_kpl87")
 
 [node name="PIdle" type="Node" parent="StateMachine"]
-script = ExtResource("6_e5nbf")
+script = ExtResource("6_ccgb1")
 
 [node name="PMoving" type="Node" parent="StateMachine"]
-script = ExtResource("7_s5ak0")
+script = ExtResource("7_vwd7g")
 
 [node name="Attacking" type="Node" parent="StateMachine"]
 script = ExtResource("8_np4fa")

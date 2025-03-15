@@ -6,8 +6,9 @@ class_name Shooter extends Host
 func _on_draw():
 	draw_line(Vector2.ZERO, velocity.normalized() * attack_range_area_collider.shape.radius, Color(1, 0, 1))
 
+
 func process_and_skip(_delta: float):
-	text.text = str(attack_target.name) if attack_target else ""
+	text.text = state_machine.state.name
 	return false
 
 func primary_action():

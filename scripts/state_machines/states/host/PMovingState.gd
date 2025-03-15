@@ -1,11 +1,11 @@
-extends GruntState
+extends HostState
 
 func enter(_previous: String, _data: Dictionary = {}):
     state_machine.animation_player.stop()
     state_machine.animation_player.play("Moving")
 
 func physics_update(_delta: float) -> void:
-    if !grunt.occupier:
+    if !entity.occupier:
         finished.emit(ROAMING)
         return
 
@@ -21,6 +21,6 @@ func physics_update(_delta: float) -> void:
     else:
         state_machine.sprite.flip_h = true
     
-    grunt.velocity = direction * grunt.speed * _delta
+    entity.velocity = direction * entity.speed * _delta
  
-    grunt.move_and_slide()
+    entity.move_and_slide()

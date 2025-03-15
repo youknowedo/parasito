@@ -10,7 +10,7 @@ signal died()
 var host: Host = null
 
 func _ready():
-	player_health_set.emit(health, max_health, 0, 0)
+	player_health_set.emit(max_health, max_health, 0, 0)
 	actual_position = position
 
 func _on_health_set(_new_health: int, _max_health: int) -> void:
@@ -20,3 +20,9 @@ func _on_damaged(_by: Entity):
 	if health <= 0:
 		state_machine.change_state("Dead")
 		died.emit()
+
+func reset():
+	health = max_health
+	host = null
+	player_health_set.emit(health, max_health, 0, 0)
+	state_machine.change_state("Idle")

@@ -1,8 +1,11 @@
-extends Node2D
+class_name Master extends Node2D 
+
+signal new_level()
 
 @export var title_rect: TextureRect
-@export var player: Entity
+@export var player: Player
 @export var regions: Array[Region] = []
+@export var hostiles_parent: Node
 
 @export var exit_area: Area2D
 
@@ -16,6 +19,17 @@ func _process(delta: float) -> void:
 		title_rect.visible = false
 		started = true
 		init_room()
+
+func reset() -> void:
+	current_region_index = 0
+	current_room_index = -1
+	player.reset()
+	for child in hostiles_parent.get_children():
+		child.queue_free()
+	if current_room:
+		current_room.queue_free()
+
+	init_room()
 
 func init_room() -> void:
 	regions[current_region_index].current_level += 1
@@ -34,16 +48,31 @@ func init_room() -> void:
 	current_room.position = Vector2.ZERO
 	player.position = current_room.player_spawn_point.position
 	player.actual_position = player.position
+	if player.host:
+		player.host.position = player.position
+		player.host.actual_position = player.position
 	current_room.enemies = regions[current_region_index].enemies
 	exit_area.position = current_room.exit_point.position
 
 	add_child(current_room)
 
+	for spawn_point in current_room.spawn_points:
+		var enemy = current_room.enemies[randi() % current_room.enemies.size()].instantiate()
+		enemy.position = spawn_point.position
+		hostiles_parent.add_child(enemy)
+
+	new_level.emit()
 
 func _on_area_body_entered_exit(body:Node2D) -> void:
-	if !body.is_in_group("player"):
+	print(body.get_groups())
+
+	if !body.is_in_group("player") && !("occupier" in body && body.occupier):
 		return
-	print("Exit")
+	
+	for child in hostiles_parent.get_children():
+		# Check if has occupier
+		if "occupier" not in child || !child.occupier:
+			child.queue_free()
 
 	current_room.queue_free()
 	init_room()

@@ -2,6 +2,7 @@ extends Entity
 class_name Hostile
 
 @export var raycast: RayCast2D
+@export var raycast2: RayCast2D
 @export var vision_area: Area2D
 @export var vision_area_collider: CollisionShape2D
 @export var attack_range_area: Area2D
