@@ -14,24 +14,32 @@ var current_region_index = 0
 var current_room_index = -1
 var current_room: Room
 
-func _process(delta: float) -> void:
+func _ready() -> void:
+	title_rect.visible = true
+
+func _process(_delta: float) -> void:
 	if !started && Input.is_action_just_pressed("primary_action"):
 		title_rect.visible = false
 		started = true
 		init_room()
 
 func reset() -> void:
-	current_region_index = 0
-	current_room_index = -1
-	player.reset()
 	for child in hostiles_parent.get_children():
 		child.queue_free()
 	if current_room:
 		current_room.queue_free()
+	
+	for region in regions:
+		region.current_level = -1
+
+	current_region_index = 0
+	current_room_index = -1
+	player.reset()
 
 	init_room()
 
 func init_room() -> void:
+	print(current_region_index, current_room_index)
 	regions[current_region_index].current_level += 1
 	if regions[current_region_index].num_of_levels != -1 && regions[current_region_index].current_level >= regions[current_region_index].num_of_levels:
 		current_region_index += 1
@@ -64,8 +72,6 @@ func init_room() -> void:
 	new_level.emit()
 
 func _on_area_body_entered_exit(body:Node2D) -> void:
-	print(body.get_groups())
-
 	if !body.is_in_group("player") && !("occupier" in body && body.occupier):
 		return
 	

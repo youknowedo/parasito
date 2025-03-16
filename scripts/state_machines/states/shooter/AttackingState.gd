@@ -13,7 +13,6 @@ func enter(_previous: String, _data: Dictionary = {}):
 	if entity.attack_direction.x < 0:
 		entity.state_machine.sprite.flip_h = true
 	else:
-		print("flip_h false")
 		entity.state_machine.sprite.flip_h = false
 	entity.state_machine.animation_player.stop()
 	entity.state_machine.animation_player.play("Idle")

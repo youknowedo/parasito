@@ -13,6 +13,19 @@ func _ready():
 	player_health_set.emit(max_health, max_health, 0, 0)
 	actual_position = position
 
+func _process(_delta: float):
+	if state_machine.state.name == "Dead":
+		return
+
+	if host:
+		return
+
+	if passive_damage_timer > 0:
+		passive_damage_timer -= _delta
+		if passive_damage_timer <= 0:
+			damage(1, null)
+			passive_damage_timer = passive_damage_timer_duration
+
 func _on_health_set(_new_health: int, _max_health: int) -> void:
 	player_health_set.emit(health, max_health, host.health if host else 0, host.max_health if host else 0)
 

@@ -1,24 +1,29 @@
-[gd_scene load_steps=19 format=3 uid="uid://ci76og8wvro2o"]
+[gd_scene load_steps=21 format=3 uid="uid://ci76og8wvro2o"]
 
 [ext_resource type="Script" uid="uid://bahdgceedgfv4" path="res://scripts/Master.gd" id="1_0varo"]
 [ext_resource type="PackedScene" uid="uid://qyb5nrgqndmu" path="res://scenes/objects/Player.tscn" id="1_4wp0b"]
 [ext_resource type="Script" uid="uid://c341c8wvmyxxq" path="res://scripts/ui/Health.gd" id="2_ug3q2"]
 [ext_resource type="Script" uid="uid://dll8m3fxs5ifw" path="res://scripts/Region.gd" id="2_wpumy"]
+[ext_resource type="PackedScene" uid="uid://c25jb7w7i5ofp" path="res://scenes/rooms/On1.tscn" id="3_0opgw"]
 [ext_resource type="Texture2D" uid="uid://dn1p6eken1y1h" path="res://sprites/white.png" id="4_2x5w2"]
 [ext_resource type="PackedScene" uid="uid://c2q1hjxewlymt" path="res://scenes/objects/Rascal.tscn" id="4_ty6vi"]
 [ext_resource type="Script" uid="uid://dg0jwrgjlkhv1" path="res://scripts/ui/GameOver.gd" id="5_fnvnq"]
 [ext_resource type="PackedScene" uid="uid://xm5q2u0eyi18" path="res://scenes/objects/Grunt.tscn" id="5_t1fx7"]
 [ext_resource type="PackedScene" uid="uid://dlondiawiw4sf" path="res://scenes/rooms/Cave2.tscn" id="5_wxvuj"]
-[ext_resource type="PackedScene" uid="uid://dtfc8yl5uikn1" path="res://scenes/rooms/Cave1.tscn" id="6_w6xps"]
 [ext_resource type="PackedScene" uid="uid://cyx5ih6co1r7g" path="res://scenes/rooms/Cave3.tscn" id="7_0opgw"]
 [ext_resource type="Texture2D" uid="uid://h1m41ppuobkf" path="res://sprites/UI.png" id="7_p3gu3"]
 [ext_resource type="PackedScene" uid="uid://ck7bvi1c86db0" path="res://scenes/objects/Shooter.tscn" id="8_id0rc"]
 [ext_resource type="Texture2D" uid="uid://dgfbyyauysco0" path="res://sprites/font.png" id="9_nav6e"]
+[ext_resource type="PackedScene" uid="uid://od0iotbmt5gm" path="res://scenes/objects/Door.tscn" id="10_kydqw"]
 [ext_resource type="Texture2D" uid="uid://0e758ohgaolk" path="res://sprites/Title.png" id="12_yepdt"]
 [ext_resource type="Texture2D" uid="uid://dsgxqnnp2jum" path="res://sprites/GameOver.png" id="15_0opgw"]
 [ext_resource type="Script" uid="uid://0s7lan1qyfnb" path="res://scripts/LevelCounter.gd" id="15_r6f15"]
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_jwc86"]
+size = Vector2(8, 32)
+
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_vnxwg"]
+size = Vector2(8, 32)
 
 [node name="Master" type="Node2D" node_paths=PackedStringArray("title_rect", "player", "regions", "hostiles_parent", "exit_area")]
 texture_filter = 1
@@ -34,7 +39,7 @@ exit_area = NodePath("ExitArea")
 [node name="Region1" type="Node" parent="Regions"]
 script = ExtResource("2_wpumy")
 num_of_levels = 1
-rooms = Array[PackedScene]([ExtResource("6_w6xps")])
+rooms = Array[PackedScene]([ExtResource("3_0opgw")])
 enemies = Array[PackedScene]([ExtResource("8_id0rc")])
 
 [node name="Region2" type="Node" parent="Regions"]
@@ -55,10 +60,22 @@ enemies = Array[PackedScene]([ExtResource("8_id0rc"), ExtResource("4_ty6vi"), Ex
 position = Vector2(-54, -8)
 
 [node name="ExitArea" type="Area2D" parent="."]
+position = Vector2(8, -16)
 collision_layer = 7
 collision_mask = 7
 
+[node name="Door" type="Area2D" parent="ExitArea"]
+collision_mask = 6
+
+[node name="Door" parent="ExitArea/Door" node_paths=PackedStringArray("master") instance=ExtResource("10_kydqw")]
+master = NodePath("../../..")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ExitArea/Door"]
+position = Vector2(-12, 0)
+shape = SubResource("RectangleShape2D_jwc86")
+
 [node name="CollisionShape2D" type="CollisionShape2D" parent="ExitArea"]
+position = Vector2(12, 0)
 shape = SubResource("RectangleShape2D_vnxwg")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
@@ -92,14 +109,14 @@ parasite_digit_1_b = NodePath("ParasiteDigit1_B")
 parasite_digit_2_b = NodePath("ParasiteDigit2_B")
 
 [node name="HostDigit1_B" type="Sprite2D" parent="CanvasLayer/UI/Health"]
-position = Vector2(207, 10)
+position = Vector2(207, 12)
 texture = ExtResource("9_nav6e")
 hframes = 6
 vframes = 5
 frame = 18
 
 [node name="HostDigit2_B" type="Sprite2D" parent="CanvasLayer/UI/Health"]
-position = Vector2(216, 10)
+position = Vector2(216, 12)
 texture = ExtResource("9_nav6e")
 hframes = 6
 vframes = 5
@@ -111,9 +128,9 @@ texture_filter = 1
 texture_repeat = 2
 layout_mode = 0
 offset_left = 185.0
-offset_top = 6.0
+offset_top = 8.0
 offset_right = 234.0
-offset_bottom = 14.0
+offset_bottom = 16.0
 value = 100.0
 nine_patch_stretch = true
 texture_progress = ExtResource("4_2x5w2")
@@ -133,14 +150,14 @@ vframes = 5
 frame = 24
 
 [node name="ParasiteDigit1_B" type="Sprite2D" parent="CanvasLayer/UI/Health"]
-position = Vector2(207, 20)
+position = Vector2(207, 22)
 texture = ExtResource("9_nav6e")
 hframes = 6
 vframes = 5
 frame = 18
 
 [node name="ParasiteDigit2_B" type="Sprite2D" parent="CanvasLayer/UI/Health"]
-position = Vector2(216, 20)
+position = Vector2(216, 22)
 texture = ExtResource("9_nav6e")
 hframes = 6
 vframes = 5
@@ -151,9 +168,9 @@ texture_filter = 1
 texture_repeat = 2
 layout_mode = 0
 offset_left = 185.0
-offset_top = 16.0
+offset_top = 18.0
 offset_right = 234.0
-offset_bottom = 24.0
+offset_bottom = 26.0
 value = 100.0
 nine_patch_stretch = true
 texture_progress = ExtResource("4_2x5w2")
@@ -177,9 +194,9 @@ texture_filter = 1
 layout_mode = 3
 anchors_preset = 0
 offset_left = 83.0
-offset_top = 15.0
+offset_top = 17.0
 offset_right = 110.0
-offset_bottom = 24.0
+offset_bottom = 26.0
 script = ExtResource("15_r6f15")
 digit1 = NodePath("LevelDigit1")
 digit2 = NodePath("LevelDigit2")
@@ -225,3 +242,4 @@ texture = ExtResource("12_yepdt")
 [connection signal="died" from="Player" to="CanvasLayer/GameOver" method="_on_player_died"]
 [connection signal="player_health_set" from="Player" to="CanvasLayer/UI/Health" method="_on_player_health_set"]
 [connection signal="body_entered" from="ExitArea" to="." method="_on_area_body_entered_exit"]
+[connection signal="body_entered" from="ExitArea/Door" to="ExitArea/Door/Door" method="_on_door_body_entered"]

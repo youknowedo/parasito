@@ -1,7 +1,10 @@
 class_name Grunt extends Host
 
 @export var text: RichTextLabel
+@export var slash_sprite: Sprite2D
 @export var attack_damage = 5
+
+var attack_again = false
 
 func process_and_skip(_delta: float):
 	text.text = str(attack_target.name) if attack_target else ""
@@ -9,6 +12,9 @@ func process_and_skip(_delta: float):
 
 func primary_action():
 	if !occupier:
+		return
+	if state_machine.state.name == "Attacking":
+		attack_again = true
 		return
 
 	var mouse_position = get_global_mouse_position()

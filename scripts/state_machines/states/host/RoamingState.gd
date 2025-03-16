@@ -17,10 +17,8 @@ func update(_delta: float):
 		entity.raycast.target_position = entity.to_local(entity.attack_target.global_position)
 		entity.raycast_collision_point = entity.raycast.target_position
 		entity.raycast.collision_mask = 0b1111
-		print(entity.raycast.is_colliding())
 		if entity.raycast.is_colliding():
 			var collider = entity.raycast.get_collider()
-			print(collider)
 			entity.raycast_collision_point = entity.to_local(entity.raycast.get_collision_point())
 			if collider == entity.attack_target:
 				finished.emit(CHASING)
