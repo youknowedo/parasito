@@ -17,7 +17,8 @@ func _process(delta: float):
 		if lunge_timer <= 0:
 			is_lunging = false
 		velocity = lunge_direction * lunge_force * delta
-		move_and_slide()
+		if collider_count.count == 0:
+			move_and_slide()
 		return
 
 	if attack_target:
@@ -45,7 +46,8 @@ func _process(delta: float):
 
 		var direction = (attack_target.global_position - global_position).normalized()
 		velocity = direction * speed * delta
-		move_and_slide()
+		if collider_count.count == 0:
+			move_and_slide()
 		return true
 	else:
 		raycast.target_position = Vector2.ZERO

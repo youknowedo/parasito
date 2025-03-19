@@ -3,6 +3,7 @@ class_name Hostile
 
 @export var raycast: RayCast2D
 @export var raycast2: RayCast2D
+@export var collider_count: ColliderCount
 @export var vision_area: Area2D
 @export var vision_area_collider: CollisionShape2D
 @export var attack_range_area: Area2D
@@ -38,7 +39,7 @@ func _ready():
 func _process(_delta: float) -> void:
 	if attack_target && attack_target.health <= 0:
 		attack_target = null
-		collision_mask = 0b0011
+		collision_mask = 0b0111
 
 	queue_redraw()
 
@@ -59,7 +60,7 @@ func on_body_exited_vision_range(body: Node2D):
 		return
 	
 	attack_target = null
-	collision_mask = 0b0011
+	collision_mask = 0b0111
 
 	_on_body_exited_vision_range(body)
 

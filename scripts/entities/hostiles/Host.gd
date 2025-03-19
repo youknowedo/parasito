@@ -6,7 +6,7 @@ var occupier: Entity = null
 func _process(delta):
 	if attack_target && attack_target.health <= 0:
 		attack_target = null
-		collision_mask = 0b0011
+		collision_mask = 0b0111
 		
 	queue_redraw()
 	if !process_and_skip(delta):
@@ -24,7 +24,8 @@ func _process(delta):
 
 			velocity = input_direction * speed * delta 
 
-		move_and_slide()
+			if collider_count.count == 0:
+				move_and_slide()
 		occupier.position = global_position
 		occupier.actual_position = global_position
 

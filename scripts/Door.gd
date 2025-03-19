@@ -1,4 +1,4 @@
-extends Node2D
+class_name Door extends Node2D
 
 @export var master: Master
 @export var animation: AnimationPlayer
@@ -15,3 +15,6 @@ func _on_door_body_entered(body:Node2D) -> void:
 	
 	animation.play("Open")
 	
+
+func _on_exit_area_body_entered(body:Node2D) -> void:
+	animation.play("Close")

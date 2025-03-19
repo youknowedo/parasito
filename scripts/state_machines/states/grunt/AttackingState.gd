@@ -49,7 +49,8 @@ func update(_delta: float):
 	if attack_timer == 0:
 		entity.velocity = entity.attack_direction * attack_force * _delta
 	
-	entity.move_and_slide()
+		if grunt.collider_count.count == 0:
+			entity.move_and_slide()
 				
 func _on_animation_finished(anim_name: StringName) -> void:
 	if !anim_name.begins_with("Attack"):

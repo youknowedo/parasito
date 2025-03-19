@@ -40,6 +40,8 @@ func exit() -> void:
 	entity.collision_mask = 0b0111
 
 func _on_body_entered(body: Node2D) -> void:
+	if state_machine.state.name != LUNGING:
+		return
 	if entity.host:
 		return
 	

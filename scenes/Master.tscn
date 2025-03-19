@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=3 uid="uid://ci76og8wvro2o"]
+[gd_scene load_steps=23 format=3 uid="uid://ci76og8wvro2o"]
 
 [ext_resource type="Script" uid="uid://bahdgceedgfv4" path="res://scripts/Master.gd" id="1_0varo"]
 [ext_resource type="PackedScene" uid="uid://qyb5nrgqndmu" path="res://scenes/objects/Player.tscn" id="1_4wp0b"]
@@ -15,23 +15,28 @@
 [ext_resource type="PackedScene" uid="uid://ck7bvi1c86db0" path="res://scenes/objects/Shooter.tscn" id="8_id0rc"]
 [ext_resource type="Texture2D" uid="uid://dgfbyyauysco0" path="res://sprites/font.png" id="9_nav6e"]
 [ext_resource type="PackedScene" uid="uid://od0iotbmt5gm" path="res://scenes/objects/Door.tscn" id="10_kydqw"]
+[ext_resource type="Texture2D" uid="uid://dwd7exjowefco" path="res://sprites/Level.png" id="11_ral0k"]
+[ext_resource type="Script" uid="uid://dqp6yppywgpbr" path="res://scripts/ui/LevelScreen.gd" id="12_tbbas"]
 [ext_resource type="Texture2D" uid="uid://0e758ohgaolk" path="res://sprites/Title.png" id="12_yepdt"]
+[ext_resource type="Script" uid="uid://bqcmynl6unn08" path="res://scripts/ui/Counter.gd" id="13_ggpu3"]
 [ext_resource type="Texture2D" uid="uid://dsgxqnnp2jum" path="res://sprites/GameOver.png" id="15_0opgw"]
-[ext_resource type="Script" uid="uid://0s7lan1qyfnb" path="res://scripts/LevelCounter.gd" id="15_r6f15"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_jwc86"]
-size = Vector2(8, 32)
+size = Vector2(16, 32)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_vnxwg"]
 size = Vector2(8, 32)
 
-[node name="Master" type="Node2D" node_paths=PackedStringArray("title_rect", "player", "regions", "hostiles_parent", "exit_area")]
+[node name="Master" type="Node2D" node_paths=PackedStringArray("title_rect", "level_counter", "player", "regions", "hostiles_parent", "enter_door", "level_screen", "exit_area")]
 texture_filter = 1
 script = ExtResource("1_0varo")
 title_rect = NodePath("CanvasLayer/Title")
+level_counter = NodePath("CanvasLayer/UI/LevelCounter")
 player = NodePath("Player")
 regions = [NodePath("Regions/Region1"), NodePath("Regions/Region2"), NodePath("Regions/Region3")]
 hostiles_parent = NodePath("Hostiles")
+enter_door = NodePath("EnterDoor")
+level_screen = NodePath("CanvasLayer/LevelScreen")
 exit_area = NodePath("ExitArea")
 
 [node name="Regions" type="Node" parent="."]
@@ -56,8 +61,12 @@ enemies = Array[PackedScene]([ExtResource("8_id0rc"), ExtResource("4_ty6vi"), Ex
 
 [node name="Hostiles" type="Node2D" parent="."]
 
-[node name="Player" parent="." instance=ExtResource("1_4wp0b")]
+[node name="EnterDoor" parent="." instance=ExtResource("10_kydqw")]
+position = Vector2(-25, -16)
+
+[node name="Player" parent="." node_paths=PackedStringArray("master") instance=ExtResource("1_4wp0b")]
 position = Vector2(-54, -8)
+master = NodePath("..")
 
 [node name="ExitArea" type="Area2D" parent="."]
 position = Vector2(8, -16)
@@ -71,14 +80,88 @@ collision_mask = 6
 master = NodePath("../../..")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="ExitArea/Door"]
-position = Vector2(-12, 0)
+position = Vector2(-16, 0)
 shape = SubResource("RectangleShape2D_jwc86")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="ExitArea"]
-position = Vector2(12, 0)
+position = Vector2(36, 0)
 shape = SubResource("RectangleShape2D_vnxwg")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="LevelScreen" type="TextureRect" parent="CanvasLayer" node_paths=PackedStringArray("master", "region_counter", "room_counter")]
+visible = false
+texture_filter = 1
+offset_right = 256.0
+offset_bottom = 240.0
+texture = ExtResource("11_ral0k")
+script = ExtResource("12_tbbas")
+master = NodePath("../..")
+region_counter = NodePath("RegionCounter")
+room_counter = NodePath("RoomCounter")
+
+[node name="RegionCounter" type="Control" parent="CanvasLayer/LevelScreen" node_paths=PackedStringArray("digits")]
+texture_filter = 1
+layout_mode = 3
+anchors_preset = 0
+offset_left = 166.0
+offset_top = 119.0
+offset_right = 193.0
+offset_bottom = 128.0
+script = ExtResource("13_ggpu3")
+digits = [NodePath("LevelDigit1"), NodePath("LevelDigit2"), NodePath("LevelDigit3")]
+
+[node name="LevelDigit1" type="Sprite2D" parent="CanvasLayer/LevelScreen/RegionCounter"]
+position = Vector2(22, 5)
+texture = ExtResource("9_nav6e")
+hframes = 6
+vframes = 5
+frame = 18
+
+[node name="LevelDigit2" type="Sprite2D" parent="CanvasLayer/LevelScreen/RegionCounter"]
+position = Vector2(13, 5)
+texture = ExtResource("9_nav6e")
+hframes = 6
+vframes = 5
+frame = 18
+
+[node name="LevelDigit3" type="Sprite2D" parent="CanvasLayer/LevelScreen/RegionCounter"]
+position = Vector2(4, 5)
+texture = ExtResource("9_nav6e")
+hframes = 6
+vframes = 5
+frame = 18
+
+[node name="RoomCounter" type="Control" parent="CanvasLayer/LevelScreen"]
+texture_filter = 1
+layout_mode = 3
+anchors_preset = 0
+offset_left = 166.0
+offset_top = 128.0
+offset_right = 193.0
+offset_bottom = 137.0
+script = ExtResource("13_ggpu3")
+
+[node name="LevelDigit1" type="Sprite2D" parent="CanvasLayer/LevelScreen/RoomCounter"]
+position = Vector2(22, 5)
+texture = ExtResource("9_nav6e")
+hframes = 6
+vframes = 5
+frame = 18
+
+[node name="LevelDigit2" type="Sprite2D" parent="CanvasLayer/LevelScreen/RoomCounter"]
+position = Vector2(13, 5)
+texture = ExtResource("9_nav6e")
+hframes = 6
+vframes = 5
+frame = 18
+
+[node name="LevelDigit3" type="Sprite2D" parent="CanvasLayer/LevelScreen/RoomCounter"]
+position = Vector2(4, 5)
+texture = ExtResource("9_nav6e")
+hframes = 6
+vframes = 5
+frame = 18
 
 [node name="UI" type="TextureRect" parent="CanvasLayer"]
 texture_filter = 1
@@ -164,6 +247,7 @@ vframes = 5
 frame = 18
 
 [node name="ParasiteHealth" type="TextureProgressBar" parent="CanvasLayer/UI/Health"]
+clip_children = 2
 texture_filter = 1
 texture_repeat = 2
 layout_mode = 0
@@ -171,7 +255,7 @@ offset_left = 185.0
 offset_top = 18.0
 offset_right = 234.0
 offset_bottom = 26.0
-value = 100.0
+value = 50.0
 nine_patch_stretch = true
 texture_progress = ExtResource("4_2x5w2")
 
@@ -189,7 +273,7 @@ hframes = 6
 vframes = 5
 frame = 24
 
-[node name="LevelCounter" type="Control" parent="CanvasLayer/UI" node_paths=PackedStringArray("digit1", "digit2", "digit3")]
+[node name="LevelCounter" type="Control" parent="CanvasLayer/UI" node_paths=PackedStringArray("digits")]
 texture_filter = 1
 layout_mode = 3
 anchors_preset = 0
@@ -197,10 +281,8 @@ offset_left = 83.0
 offset_top = 17.0
 offset_right = 110.0
 offset_bottom = 26.0
-script = ExtResource("15_r6f15")
-digit1 = NodePath("LevelDigit1")
-digit2 = NodePath("LevelDigit2")
-digit3 = NodePath("LevelDigit3")
+script = ExtResource("13_ggpu3")
+digits = [NodePath("LevelDigit1"), NodePath("LevelDigit2"), NodePath("LevelDigit3")]
 
 [node name="LevelDigit1" type="Sprite2D" parent="CanvasLayer/UI/LevelCounter"]
 position = Vector2(22, 5)
@@ -233,13 +315,14 @@ script = ExtResource("5_fnvnq")
 master = NodePath("../..")
 
 [node name="Title" type="TextureRect" parent="CanvasLayer"]
+visible = false
 texture_filter = 1
 offset_right = 256.0
 offset_bottom = 240.0
 texture = ExtResource("12_yepdt")
 
-[connection signal="new_level" from="." to="CanvasLayer/UI/LevelCounter" method="_on_master_new_level"]
 [connection signal="died" from="Player" to="CanvasLayer/GameOver" method="_on_player_died"]
 [connection signal="player_health_set" from="Player" to="CanvasLayer/UI/Health" method="_on_player_health_set"]
 [connection signal="body_entered" from="ExitArea" to="." method="_on_area_body_entered_exit"]
+[connection signal="body_entered" from="ExitArea" to="ExitArea/Door/Door" method="_on_exit_area_body_entered"]
 [connection signal="body_entered" from="ExitArea/Door" to="ExitArea/Door/Door" method="_on_door_body_entered"]

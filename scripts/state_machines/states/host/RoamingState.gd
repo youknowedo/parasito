@@ -45,7 +45,8 @@ func update(_delta: float):
 		state_machine.sprite.flip_h = true
 
 	entity.velocity = direction.normalized() * entity.speed * _delta
-	entity.move_and_slide()
+	if entity.collider_count.count == 0:
+		entity.move_and_slide()
 
 func random_inside_unit_circle() -> Vector2:
 	var theta : float = randf() * 2 * PI

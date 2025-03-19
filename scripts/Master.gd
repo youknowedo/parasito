@@ -1,11 +1,13 @@
-class_name Master extends Node2D 
-
-signal new_level()
+class_name Master extends Node2D
 
 @export var title_rect: TextureRect
+@export var level_counter: Counter
 @export var player: Player
 @export var regions: Array[Region] = []
 @export var hostiles_parent: Node
+@export var enter_door: Door
+
+@export var level_screen: LevelScreen
 
 @export var exit_area: Area2D
 
@@ -13,15 +15,15 @@ var started = false
 var current_region_index = 0
 var current_room_index = -1
 var current_room: Room
+var current_level = 0
 
 func _ready() -> void:
 	title_rect.visible = true
 
 func _process(_delta: float) -> void:
-	if !started && Input.is_action_just_pressed("primary_action"):
+	if !started && title_rect.visible && Input.is_action_just_pressed("primary_action"):
 		title_rect.visible = false
-		started = true
-		init_room()
+		level_screen.new_level(1, 1)
 
 func reset() -> void:
 	for child in hostiles_parent.get_children():
@@ -35,11 +37,15 @@ func reset() -> void:
 	current_region_index = 0
 	current_room_index = -1
 	player.reset()
+	level_counter.set_number(0)
+	current_level = 0
 
 	init_room()
 
 func init_room() -> void:
-	print(current_region_index, current_room_index)
+	current_level += 1
+	level_counter.set_number(current_level)
+	started = true
 	regions[current_region_index].current_level += 1
 	if regions[current_region_index].num_of_levels != -1 && regions[current_region_index].current_level >= regions[current_region_index].num_of_levels:
 		current_region_index += 1
@@ -52,8 +58,12 @@ func init_room() -> void:
 		i = randi() % regions[current_region_index].rooms.size()
 	current_room_index = i
 
-	current_room =  regions[current_region_index].rooms[current_room_index].instantiate()
+	current_room = regions[current_region_index].rooms[current_room_index].instantiate()
 	current_room.position = Vector2.ZERO
+
+	enter_door.position = current_room.player_spawn_point.position
+	enter_door.position.x -= 32
+
 	player.position = current_room.player_spawn_point.position
 	player.actual_position = player.position
 	if player.host:
@@ -69,9 +79,10 @@ func init_room() -> void:
 		enemy.position = spawn_point.position
 		hostiles_parent.add_child(enemy)
 
-	new_level.emit()
+func _on_area_body_entered_exit(body: Node2D) -> void:
+	if started == false:
+		return
 
-func _on_area_body_entered_exit(body:Node2D) -> void:
 	if !body.is_in_group("player") && !("occupier" in body && body.occupier):
 		return
 	
@@ -81,4 +92,5 @@ func _on_area_body_entered_exit(body:Node2D) -> void:
 			child.queue_free()
 
 	current_room.queue_free()
-	init_room()
+	level_screen.new_level(current_region_index + 1, current_room_index + 1)
+	started = false

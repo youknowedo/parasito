@@ -1,10 +1,14 @@
-[gd_scene load_steps=7 format=3 uid="uid://c2q1hjxewlymt"]
+[gd_scene load_steps=9 format=3 uid="uid://c2q1hjxewlymt"]
 
 [ext_resource type="Script" uid="uid://c8qevsoyex53o" path="res://scripts/entities/hostiles/Rascal.gd" id="1_cv6ig"]
 [ext_resource type="Texture2D" uid="uid://cuox7larjd4s6" path="res://sprites/rascal.png" id="2_5vg2j"]
+[ext_resource type="Script" uid="uid://dug1i3dw6d426" path="res://scripts/ColliderCount.gd" id="3_la4g7"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_gs4fm"]
 size = Vector2(8, 8)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_3ud2d"]
+radius = 8.5
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_oljxs"]
 radius = 68.884
@@ -15,12 +19,13 @@ radius = 21.0
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_kt0cr"]
 size = Vector2(4, 4)
 
-[node name="Rascal" type="CharacterBody2D" node_paths=PackedStringArray("raycast", "raycast2", "vision_area", "vision_area_collider", "attack_range_area", "attack_range_area_collider") groups=["entity"]]
+[node name="Rascal" type="CharacterBody2D" node_paths=PackedStringArray("raycast", "raycast2", "collider_count", "vision_area", "vision_area_collider", "attack_range_area", "attack_range_area_collider") groups=["entity"]]
 collision_layer = 4
 collision_mask = 5
 script = ExtResource("1_cv6ig")
 raycast = NodePath("RayCast2D")
 raycast2 = NodePath("RayCast2D2")
+collider_count = NodePath("StaticRange")
 vision_area = NodePath("VisionRange")
 vision_area_collider = NodePath("VisionRange/CollisionShape2D")
 attack_range_area = NodePath("AttackRange")
@@ -34,6 +39,13 @@ vframes = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_gs4fm")
+
+[node name="StaticRange" type="Area2D" parent="."]
+collision_mask = 6
+script = ExtResource("3_la4g7")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticRange"]
+shape = SubResource("CircleShape2D_3ud2d")
 
 [node name="VisionRange" type="Area2D" parent="."]
 collision_mask = 2
@@ -62,6 +74,8 @@ collision_mask = 7
 target_position = Vector2(0, 0)
 collision_mask = 7
 
+[connection signal="body_entered" from="StaticRange" to="StaticRange" method="_on_body_entered"]
+[connection signal="body_exited" from="StaticRange" to="StaticRange" method="_on_body_exited"]
 [connection signal="body_entered" from="VisionRange" to="." method="_on_body_entered_vision_range"]
 [connection signal="body_exited" from="VisionRange" to="." method="_on_body_exited_vision_range"]
 [connection signal="body_entered" from="AttackRange" to="." method="_on_body_entered_attack_range"]

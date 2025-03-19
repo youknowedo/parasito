@@ -84,7 +84,8 @@ func update(_delta: float):
 		entity.attack_direction = Vector2(cos(rounded_angle), sin(rounded_angle))
 
 		entity.velocity = entity.attack_direction * entity.speed * _delta
-		entity.move_and_slide()
+		if entity.collider_count.count == 0:
+			entity.move_and_slide()
 	else:
 		timer_started = true
 

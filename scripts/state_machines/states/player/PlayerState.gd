@@ -4,6 +4,7 @@ const IDLE = "Idle"
 const MOVING = "Moving"
 const LUNGING = "Lunging"
 const POSSESSING = "Possessing"
+const DEAD = "Dead"
 
 var entity: Player
 

@@ -35,7 +35,8 @@ func physics_update(_delta: float):
 		state_machine.sprite.flip_h = true
 
 	entity.velocity = entity.attack_direction * entity.speed * _delta
-	entity.move_and_slide()
+	if entity.collider_count.count == 0:
+		entity.move_and_slide()
 
 func exit():
 	entity.raycast.target_position = Vector2.ZERO
