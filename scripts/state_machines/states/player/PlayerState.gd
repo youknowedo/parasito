@@ -6,8 +6,6 @@ const LUNGING = "Lunging"
 const POSSESSING = "Possessing"
 const DEAD = "Dead"
 
-var entity: Player
-
 func _ready() -> void:
 	await owner.ready
 	entity = owner as Player

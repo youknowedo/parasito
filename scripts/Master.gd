@@ -83,13 +83,18 @@ func _on_area_body_entered_exit(body: Node2D) -> void:
 	if started == false:
 		return
 
-	if !body.is_in_group("player") && !("occupier" in body && body.occupier):
-		return
-	
+	var no_hostiles_left = true
 	for child in hostiles_parent.get_children():
-		# Check if has occupier
-		if "occupier" not in child || !child.occupier:
+		if "occupier" in child && child.occupier:
+			continue
+		if child.health <= 0:
 			child.queue_free()
+			continue	
+		
+		no_hostiles_left = false
+
+	if !no_hostiles_left:
+		return
 
 	current_room.queue_free()
 	level_screen.new_level(current_region_index + 1, current_room_index + 1)

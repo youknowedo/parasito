@@ -1,4 +1,4 @@
-[gd_scene load_steps=24 format=3 uid="uid://ck7bvi1c86db0"]
+[gd_scene load_steps=26 format=3 uid="uid://ck7bvi1c86db0"]
 
 [ext_resource type="Script" uid="uid://cf6iwhq52trvy" path="res://scripts/entities/hostiles/hosts/Shooter.gd" id="1_5c6ca"]
 [ext_resource type="Texture2D" uid="uid://bog42spoatx13" path="res://sprites/shooter.png" id="2_hh4wt"]
@@ -10,6 +10,7 @@
 [ext_resource type="Script" uid="uid://dsbx38lh3lgws" path="res://scripts/state_machines/states/host/PMovingState.gd" id="7_ad3xa"]
 [ext_resource type="Script" uid="uid://b55yhinddli8s" path="res://scripts/state_machines/states/shooter/AttackingState.gd" id="8_dverg"]
 [ext_resource type="PackedScene" uid="uid://bk5brchyxcvhu" path="res://scenes/objects/Projectile.tscn" id="9_bd1nq"]
+[ext_resource type="Script" uid="uid://ci8td6weabxx7" path="res://scripts/state_machines/states/shared/DeadState.gd" id="11_pis81"]
 
 [sub_resource type="Animation" id="Animation_bxurt"]
 resource_name = "Attacking"
@@ -254,6 +255,22 @@ tracks/2/keys = {
 "values": [Vector2(-6, 0.5)]
 }
 
+[sub_resource type="Animation" id="Animation_pis81"]
+resource_name = "Dead"
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite:frame_coords")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [Vector2i(0, 7)]
+}
+
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_dyjh3"]
 _data = {
 &"Attacking": SubResource("Animation_bxurt"),
@@ -261,6 +278,7 @@ _data = {
 &"Attacking_D_Up": SubResource("Animation_ypvfl"),
 &"Attacking_Down": SubResource("Animation_xrol3"),
 &"Attacking_Up": SubResource("Animation_bct8o"),
+&"Dead": SubResource("Animation_pis81"),
 &"Idle": SubResource("Animation_kwl5b"),
 &"Moving": SubResource("Animation_heage"),
 &"RESET": SubResource("Animation_06xbn")
@@ -357,6 +375,9 @@ script = ExtResource("7_ad3xa")
 [node name="Attacking" type="Node" parent="StateMachine"]
 script = ExtResource("8_dverg")
 projectile = ExtResource("9_bd1nq")
+
+[node name="Dead" type="Node" parent="StateMachine"]
+script = ExtResource("11_pis81")
 
 [node name="RichTextLabel" type="RichTextLabel" parent="."]
 offset_right = 40.0

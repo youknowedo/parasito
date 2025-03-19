@@ -1,4 +1,4 @@
-[gd_scene load_steps=29 format=3 uid="uid://xm5q2u0eyi18"]
+[gd_scene load_steps=32 format=3 uid="uid://xm5q2u0eyi18"]
 
 [ext_resource type="Script" uid="uid://doaebvumrt1lj" path="res://scripts/entities/hostiles/hosts/Grunt.gd" id="1_qbgcj"]
 [ext_resource type="Texture2D" uid="uid://y8mtj51jrn5x" path="res://sprites/grunt.png" id="2_xwuck"]
@@ -9,6 +9,7 @@
 [ext_resource type="Script" uid="uid://8hosgct8dgpx" path="res://scripts/state_machines/states/host/PIdleState.gd" id="6_ccgb1"]
 [ext_resource type="Script" uid="uid://dsbx38lh3lgws" path="res://scripts/state_machines/states/host/PMovingState.gd" id="7_vwd7g"]
 [ext_resource type="Script" uid="uid://bdj7pkk3qt1pr" path="res://scripts/state_machines/states/grunt/AttackingState.gd" id="8_np4fa"]
+[ext_resource type="Script" uid="uid://ci8td6weabxx7" path="res://scripts/state_machines/states/shared/DeadState.gd" id="10_ccgb1"]
 
 [sub_resource type="Animation" id="Animation_bxurt"]
 resource_name = "Attack"
@@ -947,6 +948,22 @@ tracks/5/keys = {
 "values": [0.0]
 }
 
+[sub_resource type="Animation" id="Animation_la704"]
+resource_name = "Dead"
+step = 0.05
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Grunt:frame_coords")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [Vector2i(0, 11)]
+}
+
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_dyjh3"]
 _data = {
 &"Attack": SubResource("Animation_bxurt"),
@@ -961,6 +978,7 @@ _data = {
 &"AttackU": SubResource("Animation_kpl87"),
 &"AttackU_Flip": SubResource("Animation_ccgb1"),
 &"Attack_Flip": SubResource("Animation_fb15v"),
+&"Dead": SubResource("Animation_la704"),
 &"Idle": SubResource("Animation_kwl5b"),
 &"Moving": SubResource("Animation_heage"),
 &"RESET": SubResource("Animation_06xbn")
@@ -969,11 +987,13 @@ _data = {
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_gs4fm"]
 size = Vector2(8, 13)
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_mjcda"]
-radius = 8.5
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ccgb1"]
+size = Vector2(10, 15)
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_oljxs"]
 radius = 201.022
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_mjcda"]
 
 [node name="Grunt" type="CharacterBody2D" node_paths=PackedStringArray("text", "slash_sprite", "raycast", "raycast2", "collider_count", "vision_area", "vision_area_collider", "attack_range_area", "attack_range_area_collider", "state_machine") groups=["entity", "host"]]
 collision_layer = 4
@@ -983,7 +1003,7 @@ text = NodePath("RichTextLabel")
 slash_sprite = NodePath("Slash")
 raycast = NodePath("RayCast2D")
 raycast2 = NodePath("RayCast2D2")
-collider_count = NodePath("StaticRange")
+collider_count = NodePath("CollisionShape2D/StaticRange")
 vision_area = NodePath("VisionRange")
 vision_area_collider = NodePath("VisionRange/CollisionShape2D")
 attack_range_area = NodePath("AttackRange")
@@ -1016,12 +1036,14 @@ libraries = {
 position = Vector2(-3, 1)
 shape = SubResource("RectangleShape2D_gs4fm")
 
-[node name="StaticRange" type="Area2D" parent="."]
+[node name="StaticRange" type="Area2D" parent="CollisionShape2D"]
+position = Vector2(0, -1)
 collision_mask = 6
 script = ExtResource("3_kpl87")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticRange"]
-shape = SubResource("CircleShape2D_mjcda")
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CollisionShape2D/StaticRange"]
+position = Vector2(0, 1)
+shape = SubResource("RectangleShape2D_ccgb1")
 
 [node name="VisionRange" type="Area2D" parent="."]
 collision_mask = 2
@@ -1064,10 +1086,13 @@ script = ExtResource("7_vwd7g")
 [node name="Attacking" type="Node" parent="StateMachine"]
 script = ExtResource("8_np4fa")
 
+[node name="Dead" type="Node" parent="StateMachine"]
+script = ExtResource("10_ccgb1")
+
 [node name="RichTextLabel" type="RichTextLabel" parent="."]
 offset_right = 40.0
 offset_bottom = 40.0
 
 [connection signal="animation_finished" from="AnimationPlayer" to="StateMachine/Attacking" method="_on_animation_finished"]
-[connection signal="body_entered" from="StaticRange" to="StaticRange" method="_on_body_entered"]
-[connection signal="body_exited" from="StaticRange" to="StaticRange" method="_on_body_exited"]
+[connection signal="body_entered" from="CollisionShape2D/StaticRange" to="CollisionShape2D/StaticRange" method="_on_body_entered"]
+[connection signal="body_exited" from="CollisionShape2D/StaticRange" to="CollisionShape2D/StaticRange" method="_on_body_exited"]

@@ -5,7 +5,7 @@ func enter(_previous: String, _data: Dictionary = {}):
 	state_machine.animation_player.play("Moving")
 
 func physics_update(_delta: float) -> void:
-	if !entity.occupier:
+	if !host.occupier:
 		finished.emit(ROAMING)
 		return
 
@@ -21,6 +21,6 @@ func physics_update(_delta: float) -> void:
 	else:
 		state_machine.sprite.flip_h = true
 	
-	entity.velocity = direction * entity.speed * _delta
+	host.velocity = direction * host.speed * _delta
  
-	entity.move_and_slide()
+	host.move_and_slide()

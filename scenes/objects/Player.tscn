@@ -7,7 +7,7 @@
 [ext_resource type="Script" uid="uid://s0u8ku4va808" path="res://scripts/state_machines/states/player/MovingState.gd" id="5_b7u2i"]
 [ext_resource type="Script" uid="uid://tq4onar0q642" path="res://scripts/state_machines/states/player/LungingState.gd" id="6_ojp0b"]
 [ext_resource type="Script" uid="uid://du8n1rdlk1kju" path="res://scripts/state_machines/states/player/Possessing.gd" id="7_ekumq"]
-[ext_resource type="Script" uid="uid://ci8td6weabxx7" path="res://scripts/state_machines/states/player/DeadState.gd" id="8_n4knn"]
+[ext_resource type="Script" path="res://scripts/state_machines/states/player/DeadState.gd" id="8_n4knn"]
 
 [sub_resource type="Animation" id="Animation_7pqvu"]
 resource_name = "Dead"
