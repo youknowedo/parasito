@@ -24,7 +24,7 @@ func _process(_delta: float):
 	if master.started && passive_damage_timer > 0:
 		passive_damage_timer -= _delta
 		if passive_damage_timer <= 0:
-			damage(1, null)
+			# damage(1, null)
 			passive_damage_timer = passive_damage_timer_duration
 
 func _on_health_set(_new_health: int, _max_health: int) -> void:

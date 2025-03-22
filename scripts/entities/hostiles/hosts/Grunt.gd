@@ -7,7 +7,7 @@ class_name Grunt extends Host
 var attack_again = false
 
 func process_and_skip(_delta: float):
-	text.text = str(attack_target.name) if attack_target else ""
+	text.text = state_machine.state.name
 	return false
 
 func primary_action():

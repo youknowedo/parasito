@@ -39,17 +39,18 @@ func _ready():
 func _process(_delta: float) -> void:
 	if attack_target && attack_target.health <= 0:
 		attack_target = null
-		collision_mask = 0b0111
+		collision_mask = 0b0000
 
 	queue_redraw()
 
 func on_body_entered_vision_range(body: Node2D):
+	if attack_target:
+		return
 	if !body.is_in_group("player"):
 		return
+	print(body.name + " entered vision range of " + name)
 	
 	attack_target = body
-	in_attack_range = false
-	collision_mask = 0b0101
 
 	_on_body_entered_vision_range(body)
 
@@ -59,9 +60,9 @@ func _on_body_entered_vision_range(_body: Node2D):
 func on_body_exited_vision_range(body: Node2D):
 	if body != attack_target:
 		return
+	print(body.name + " exited vision range  of " + name)
 	
 	attack_target = null
-	collision_mask = 0b0111
 
 	_on_body_exited_vision_range(body)
 
@@ -71,6 +72,7 @@ func _on_body_exited_vision_range(_body: Node2D):
 func on_body_entered_attack_range(body: Node2D):
 	if body != attack_target:
 		return
+	print(body.name + " entered attack range of " + name)
 	
 	in_attack_range = true
 
@@ -82,6 +84,7 @@ func _on_body_entered_attack_range(_body: Node2D):
 func on_body_exited_attack_range(body: Node2D):
 	if body != attack_target:
 		return
+	print(body.name + " exited attack range of " + name)
 	
 	in_attack_range = false
 
