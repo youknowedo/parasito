@@ -90,7 +90,6 @@ shape = SubResource("RectangleShape2D_vnxwg")
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
 [node name="LevelScreen" type="TextureRect" parent="CanvasLayer" node_paths=PackedStringArray("master", "region_counter", "room_counter")]
-visible = false
 texture_filter = 1
 offset_right = 256.0
 offset_bottom = 240.0

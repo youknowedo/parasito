@@ -6,6 +6,7 @@ const ATTACKING = "Attacking"
 const DEAD = "Dead"
 const P_IDLE = "PIdle"
 const P_MOVING = "PMoving"
+const DASHING = "Dashing"
 
 var host: Host
 

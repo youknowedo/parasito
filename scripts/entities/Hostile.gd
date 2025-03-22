@@ -48,6 +48,7 @@ func on_body_entered_vision_range(body: Node2D):
 		return
 	
 	attack_target = body
+	in_attack_range = false
 	collision_mask = 0b0101
 
 	_on_body_entered_vision_range(body)

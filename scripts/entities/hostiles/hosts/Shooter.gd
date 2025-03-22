@@ -22,3 +22,9 @@ func primary_action():
 	attack_direction = Vector2(cos(rounded_angle), sin(rounded_angle))
 
 	state_machine.change_state("Attacking")
+
+func secondary_action():
+	if !occupier:
+		return
+
+	state_machine.change_state("Dashing")

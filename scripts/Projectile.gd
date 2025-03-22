@@ -2,7 +2,7 @@ class_name Projectile extends Area2D
 
 var velocity: Vector2
 var attack_damage: int
-var origin: Entity
+var origin: Hostile
 
 var actual_position: Vector2
 
@@ -18,5 +18,7 @@ func _on_body_entered(body:Node2D) -> void:
 
 	if body.is_in_group("entity"):
 		body.damage(10, origin)
+		if body.health <= 0:
+			origin.attack_target = null
 
 	queue_free()

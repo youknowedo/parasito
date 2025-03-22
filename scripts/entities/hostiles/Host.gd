@@ -1,9 +1,12 @@
 extends Hostile
 class_name Host
 
-var occupier: Entity = null
+var occupier: Player = null
 
 func _process(delta):
+	if occupier && !occupier.master.started:
+		return
+
 	if attack_target && attack_target.health <= 0:
 		attack_target = null
 		collision_mask = 0b0111
@@ -13,19 +16,13 @@ func _process(delta):
 		if !occupier:
 			return
 
-		if Input.is_action_just_pressed("primary_action"):
-			primary_action()
+		if health > 0:
+			if Input.is_action_just_pressed("primary_action"):
+				primary_action()
 
-		elif Input.is_action_just_pressed("secondary_action"):
-			secondary_action()
+			elif Input.is_action_just_pressed("secondary_action"):
+				secondary_action()
 
-		else:
-			var input_direction = Input.get_vector("move_left", "move_right", "move_up", "move_down")
-
-			velocity = input_direction * speed * delta 
-
-			if collider_count.count == 0:
-				move_and_slide()
 		occupier.position = global_position
 		occupier.actual_position = global_position
 

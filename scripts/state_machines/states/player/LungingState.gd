@@ -3,10 +3,15 @@ extends PlayerState
 @export var lunge_force = 500.0
 @export var lunge_duration = 0.2
 
+var lunge_again = false
+var lunge_recovery = -0.2
 var lunge_timer = 0.0
 var lunge_direction = Vector2.ZERO
 
 func enter(_previous_state_path: String, _data := {}) -> void:
+	if _previous_state_path == LUNGING && lunge_timer > lunge_recovery:
+		return
+
 	lunge_timer = lunge_duration
 
 	entity.collision_mask = 0b0011
@@ -17,6 +22,11 @@ func enter(_previous_state_path: String, _data := {}) -> void:
 	var rounded_angle = (PI / 4) * round(angle / (PI / 4))
 	lunge_direction = Vector2(cos(rounded_angle), sin(rounded_angle))
 
+	if lunge_direction.x > 0:
+		state_machine.sprite.flip_h = false
+	else:
+		state_machine.sprite.flip_h = true
+
 	if entity.host:
 		entity.host.occupier = null
 		entity.host = null
@@ -25,8 +35,18 @@ func enter(_previous_state_path: String, _data := {}) -> void:
 func physics_update(_delta: float) -> void:
 	lunge_timer -= _delta
 	
+	if lunge_timer <= lunge_recovery:
+		if lunge_again:
+			lunge_again = false
+			enter(LUNGING)
+		else:
+			finished.emit(IDLE)
+			return
+
+	if Input.is_action_just_pressed("tertiary_action"):
+		lunge_again = true
+		
 	if lunge_timer <= 0:
-		finished.emit(IDLE)
 		return
 
 	entity.velocity = lunge_direction * lunge_force * _delta

@@ -65,5 +65,9 @@ func _on_animation_finished(anim_name: StringName) -> void:
 			continue
 
 		body.damage(attack_damage, host)
+		if body.health <= 0:
+			host.attack_target = null
+			finished.emit(ROAMING)
+			return
 
 	finished.emit(P_IDLE if host.occupier else CHASING)
