@@ -1,4 +1,4 @@
-[gd_scene load_steps=27 format=3 uid="uid://ck7bvi1c86db0"]
+[gd_scene load_steps=28 format=3 uid="uid://ck7bvi1c86db0"]
 
 [ext_resource type="Script" uid="uid://cf6iwhq52trvy" path="res://scripts/entities/hostiles/hosts/Shooter.gd" id="1_5c6ca"]
 [ext_resource type="Texture2D" uid="uid://bog42spoatx13" path="res://sprites/shooter.png" id="2_hh4wt"]
@@ -12,6 +12,7 @@
 [ext_resource type="PackedScene" uid="uid://bk5brchyxcvhu" path="res://scenes/objects/Projectile.tscn" id="9_bd1nq"]
 [ext_resource type="Script" uid="uid://ci8td6weabxx7" path="res://scripts/state_machines/states/shared/DeadState.gd" id="11_pis81"]
 [ext_resource type="Script" uid="uid://bau3ttwh3aect" path="res://scripts/state_machines/states/host/DashingState.gd" id="12_ad3xa"]
+[ext_resource type="Script" uid="uid://cep71oicapwn5" path="res://scripts/state_machines/states/shared/Damaged.gd" id="13_0a6ld"]
 
 [sub_resource type="Animation" id="Animation_bxurt"]
 resource_name = "Attacking"
@@ -383,6 +384,9 @@ script = ExtResource("11_pis81")
 [node name="Dashing" type="Node" parent="StateMachine"]
 script = ExtResource("12_ad3xa")
 dash_force = 5000.0
+
+[node name="Damaged" type="Node" parent="StateMachine"]
+script = ExtResource("13_0a6ld")
 
 [node name="RichTextLabel" type="RichTextLabel" parent="."]
 offset_right = 40.0

@@ -1,7 +1,13 @@
-[gd_scene load_steps=3 format=4 uid="uid://dlondiawiw4sf"]
+[gd_scene load_steps=4 format=4 uid="uid://dlondiawiw4sf"]
 
 [ext_resource type="Script" uid="uid://da87kel7wco1r" path="res://scripts/Room.gd" id="1_0bxdv"]
 [ext_resource type="TileSet" uid="uid://tuw6rbxhuq2g" path="res://tilesets/Cave.tres" id="2_vfwsg"]
+
+[sub_resource type="NavigationPolygon" id="NavigationPolygon_i1mwm"]
+vertices = PackedVector2Array(60, -40, 108, -40, 108, 40, 76, 40, -77, 24, -29, -8, 76, 72, -77, 72, -109, 24, -109, -56, -84, -8, -84, -56, -29, -72, 60, -72)
+polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3, 4, 5), PackedInt32Array(3, 6, 7, 4), PackedInt32Array(4, 8, 9, 10), PackedInt32Array(9, 11, 10), PackedInt32Array(4, 10, 5), PackedInt32Array(0, 5, 12, 13)])
+outlines = Array[PackedVector2Array]([PackedVector2Array(-117, -64, -117, 32, -85, 32, -85, 80, 84, 80, 84, 48, 116, 48, 116, -48, 68, -48, 68, -80, -85, -80, -85, -64), PackedVector2Array(-76, -64, -37, -64, -37, -16, -76, -16)])
+agent_radius = 8.0
 
 [node name="Cave1" type="Node2D" node_paths=PackedStringArray("exit_point", "player_spawn_point", "spawn_points")]
 script = ExtResource("1_0bxdv")
@@ -21,3 +27,14 @@ position = Vector2(-128, 0)
 
 [node name="SpawnPoint1" type="Node2D" parent="."]
 position = Vector2(64, -16)
+
+[node name="NavigationRegion2D" type="NavigationRegion2D" parent="."]
+navigation_polygon = SubResource("NavigationPolygon_i1mwm")
+
+[node name="NavigationLink2D" type="NavigationLink2D" parent="."]
+start_position = Vector2(-84, -56)
+end_position = Vector2(-77, -72)
+
+[node name="NavigationLink2D2" type="NavigationLink2D" parent="."]
+start_position = Vector2(-77, -72)
+end_position = Vector2(-29, -72)

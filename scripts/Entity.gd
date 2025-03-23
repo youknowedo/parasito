@@ -25,6 +25,10 @@ func damage(amount: int, by: Entity) -> void:
 
 	if health <= 0 && state_machine:
 		state_machine.change_state("Dead")
+	else:
+		state_machine.change_state("Damaged", {
+			"by": by
+		})
 
 func _on_damaged(_by: Entity):
 	pass

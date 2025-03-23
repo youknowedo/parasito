@@ -3,7 +3,6 @@ class_name HostState extends State
 const ROAMING = "Roaming"
 const CHASING = "Chasing"
 const ATTACKING = "Attacking"
-const DEAD = "Dead"
 const P_IDLE = "PIdle"
 const P_MOVING = "PMoving"
 const DASHING = "Dashing"

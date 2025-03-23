@@ -1,4 +1,4 @@
-[gd_scene load_steps=32 format=3 uid="uid://xm5q2u0eyi18"]
+[gd_scene load_steps=33 format=3 uid="uid://xm5q2u0eyi18"]
 
 [ext_resource type="Script" uid="uid://doaebvumrt1lj" path="res://scripts/entities/hostiles/hosts/Grunt.gd" id="1_qbgcj"]
 [ext_resource type="Texture2D" uid="uid://y8mtj51jrn5x" path="res://sprites/grunt.png" id="2_xwuck"]
@@ -10,6 +10,7 @@
 [ext_resource type="Script" uid="uid://dsbx38lh3lgws" path="res://scripts/state_machines/states/host/PMovingState.gd" id="7_vwd7g"]
 [ext_resource type="Script" uid="uid://bdj7pkk3qt1pr" path="res://scripts/state_machines/states/grunt/AttackingState.gd" id="8_np4fa"]
 [ext_resource type="Script" uid="uid://ci8td6weabxx7" path="res://scripts/state_machines/states/shared/DeadState.gd" id="10_ccgb1"]
+[ext_resource type="Script" uid="uid://cep71oicapwn5" path="res://scripts/state_machines/states/shared/Damaged.gd" id="11_vwd7g"]
 
 [sub_resource type="Animation" id="Animation_bxurt"]
 resource_name = "Attack"
@@ -1088,6 +1089,10 @@ script = ExtResource("8_np4fa")
 
 [node name="Dead" type="Node" parent="StateMachine"]
 script = ExtResource("10_ccgb1")
+
+[node name="Damaged" type="Node" parent="StateMachine"]
+script = ExtResource("11_vwd7g")
+weight = 3
 
 [node name="RichTextLabel" type="RichTextLabel" parent="."]
 offset_right = 40.0

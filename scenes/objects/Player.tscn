@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://qyb5nrgqndmu"]
+[gd_scene load_steps=17 format=3 uid="uid://qyb5nrgqndmu"]
 
 [ext_resource type="Script" uid="uid://drqlynuv7tduc" path="res://scripts/entities/Player.gd" id="1_yndod"]
 [ext_resource type="Texture2D" uid="uid://vbpuqie36xy6" path="res://sprites/parasite.png" id="2_tdph3"]
@@ -8,6 +8,7 @@
 [ext_resource type="Script" uid="uid://tq4onar0q642" path="res://scripts/state_machines/states/player/LungingState.gd" id="6_ojp0b"]
 [ext_resource type="Script" uid="uid://du8n1rdlk1kju" path="res://scripts/state_machines/states/player/Possessing.gd" id="7_ekumq"]
 [ext_resource type="Script" uid="uid://ci8td6weabxx7" path="res://scripts/state_machines/states/shared/DeadState.gd" id="8_n4knn"]
+[ext_resource type="Script" uid="uid://cep71oicapwn5" path="res://scripts/state_machines/states/shared/Damaged.gd" id="9_2i02n"]
 
 [sub_resource type="Animation" id="Animation_7pqvu"]
 resource_name = "Dead"
@@ -167,5 +168,8 @@ script = ExtResource("7_ekumq")
 
 [node name="Dead" type="Node" parent="StateMachine"]
 script = ExtResource("8_n4knn")
+
+[node name="Damaged" type="Node" parent="StateMachine"]
+script = ExtResource("9_2i02n")
 
 [connection signal="body_entered" from="Area2D" to="StateMachine/Lunging" method="_on_body_entered"]

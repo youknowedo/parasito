@@ -1,5 +1,9 @@
 class_name State extends Node
 
+
+const DAMAGED = "Damaged"
+const DEAD = "Dead"
+
 var state_machine: StateMachine = null
 
 var entity: Entity
