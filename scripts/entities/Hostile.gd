@@ -42,6 +42,11 @@ func _ready():
 	attack_range_area.connect("body_entered", on_body_entered_attack_range)
 	attack_range_area.connect("body_exited", on_body_exited_attack_range)
 
+	_on_ready()
+
+func _on_ready():
+	pass
+
 func _process(_delta: float) -> void:
 	if attack_target && attack_target.health <= 0:
 		attack_target = null

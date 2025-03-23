@@ -1,18 +1,17 @@
-[gd_scene load_steps=28 format=3 uid="uid://ck7bvi1c86db0"]
+[gd_scene load_steps=27 format=3 uid="uid://ck7bvi1c86db0"]
 
 [ext_resource type="Script" uid="uid://cf6iwhq52trvy" path="res://scripts/entities/hostiles/hosts/Shooter.gd" id="1_5c6ca"]
 [ext_resource type="Texture2D" uid="uid://bog42spoatx13" path="res://sprites/shooter.png" id="2_hh4wt"]
 [ext_resource type="Script" uid="uid://dug1i3dw6d426" path="res://scripts/ColliderCount.gd" id="3_0bc2l"]
 [ext_resource type="Script" uid="uid://2vxqf1vcaj5f" path="res://scripts/state_machines/StateMachine.gd" id="3_71t0h"]
-[ext_resource type="Script" uid="uid://bt38k0l71s801" path="res://scripts/state_machines/states/host/RoamingState.gd" id="4_uvq8i"]
-[ext_resource type="Script" uid="uid://iyvuamqq8uyp" path="res://scripts/state_machines/states/host/ChasingState.gd" id="5_0bc2l"]
-[ext_resource type="Script" uid="uid://8hosgct8dgpx" path="res://scripts/state_machines/states/host/PIdleState.gd" id="6_pis81"]
-[ext_resource type="Script" uid="uid://dsbx38lh3lgws" path="res://scripts/state_machines/states/host/PMovingState.gd" id="7_ad3xa"]
-[ext_resource type="Script" uid="uid://b55yhinddli8s" path="res://scripts/state_machines/states/shooter/AttackingState.gd" id="8_dverg"]
-[ext_resource type="PackedScene" uid="uid://bk5brchyxcvhu" path="res://scenes/objects/Projectile.tscn" id="9_bd1nq"]
-[ext_resource type="Script" uid="uid://ci8td6weabxx7" path="res://scripts/state_machines/states/shared/DeadState.gd" id="11_pis81"]
-[ext_resource type="Script" uid="uid://bau3ttwh3aect" path="res://scripts/state_machines/states/host/DashingState.gd" id="12_ad3xa"]
-[ext_resource type="Script" uid="uid://cep71oicapwn5" path="res://scripts/state_machines/states/shared/Damaged.gd" id="13_0a6ld"]
+[ext_resource type="Script" uid="uid://bt38k0l71s801" path="res://scripts/state_machines/states/hostile/RoamingState.gd" id="5_ad3xa"]
+[ext_resource type="Script" uid="uid://iyvuamqq8uyp" path="res://scripts/state_machines/states/hostile/ChasingState.gd" id="6_0a6ld"]
+[ext_resource type="Script" uid="uid://8hosgct8dgpx" path="res://scripts/state_machines/states/hostile/host/PIdleState.gd" id="7_cmhca"]
+[ext_resource type="Script" uid="uid://dsbx38lh3lgws" path="res://scripts/state_machines/states/hostile/host/PMovingState.gd" id="8_foqtr"]
+[ext_resource type="Script" uid="uid://b55yhinddli8s" path="res://scripts/state_machines/states/hostile/host/shooter/AttackingState.gd" id="9_0i0cx"]
+[ext_resource type="Script" uid="uid://ci8td6weabxx7" path="res://scripts/state_machines/states/DeadState.gd" id="10_axykm"]
+[ext_resource type="Script" uid="uid://cep71oicapwn5" path="res://scripts/state_machines/states/Damaged.gd" id="11_ev5xh"]
+[ext_resource type="Script" uid="uid://bau3ttwh3aect" path="res://scripts/state_machines/states/hostile/host/DashingState.gd" id="12_j3f7r"]
 
 [sub_resource type="Animation" id="Animation_bxurt"]
 resource_name = "Attacking"
@@ -360,42 +359,38 @@ collision_mask = 7
 target_position = Vector2(0, 0)
 collision_mask = 7
 
-[node name="StateMachine" type="Node" parent="." node_paths=PackedStringArray("initial_state", "animation_player", "sprite")]
+[node name="StateMachine" type="Node" parent="." node_paths=PackedStringArray("animation_player", "sprite")]
 script = ExtResource("3_71t0h")
-initial_state = NodePath("Roaming")
 animation_player = NodePath("../AnimationPlayer")
 sprite = NodePath("../Sprite")
 
 [node name="Roaming" type="Node" parent="StateMachine"]
-script = ExtResource("4_uvq8i")
+script = ExtResource("5_ad3xa")
 
 [node name="Chasing" type="Node" parent="StateMachine"]
-script = ExtResource("5_0bc2l")
+script = ExtResource("6_0a6ld")
 
 [node name="PIdle" type="Node" parent="StateMachine"]
-script = ExtResource("6_pis81")
+script = ExtResource("7_cmhca")
 
 [node name="PMoving" type="Node" parent="StateMachine"]
-script = ExtResource("7_ad3xa")
+script = ExtResource("8_foqtr")
 
-[node name="Attacking" type="Node" parent="StateMachine"]
-script = ExtResource("8_dverg")
-projectile = ExtResource("9_bd1nq")
+[node name="Attacking" type="Node" parent="StateMachine" groups=["entity", "host"]]
+script = ExtResource("9_0i0cx")
 
 [node name="Dead" type="Node" parent="StateMachine"]
-script = ExtResource("11_pis81")
-
-[node name="Dashing" type="Node" parent="StateMachine"]
-script = ExtResource("12_ad3xa")
-dash_force = 5000.0
+script = ExtResource("10_axykm")
 
 [node name="Damaged" type="Node" parent="StateMachine"]
-script = ExtResource("13_0a6ld")
+script = ExtResource("11_ev5xh")
+
+[node name="Dashing" type="Node" parent="StateMachine"]
+script = ExtResource("12_j3f7r")
 
 [node name="RichTextLabel" type="RichTextLabel" parent="."]
 offset_right = 40.0
 offset_bottom = 40.0
 
-[connection signal="animation_finished" from="AnimationPlayer" to="StateMachine/Attacking" method="_on_animation_finished"]
 [connection signal="body_entered" from="StaticRange" to="StaticRange" method="_on_body_entered"]
 [connection signal="body_exited" from="StaticRange" to="StaticRange" method="_on_body_exited"]

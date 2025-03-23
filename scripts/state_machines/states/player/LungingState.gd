@@ -12,6 +12,10 @@ func enter(_previous_state_path: String, _data := {}) -> void:
 	if _previous_state_path == LUNGING && lunge_timer > lunge_recovery:
 		return
 
+	if _previous_state_path == DAMAGED:
+		finished.emit(IDLE)
+		return
+
 	lunge_timer = lunge_duration
 
 	entity.collision_mask = 0b0011

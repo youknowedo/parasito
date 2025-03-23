@@ -9,24 +9,24 @@ class_name LevelScreen extends TextureRect
 var timer_on = false
 
 func _process(delta: float) -> void:
-    if visible && timer != _timer && Input.is_action_just_pressed("primary_action"):
-        visible = false
-        _timer = 0.0
+	if visible && timer != _timer && Input.is_action_just_pressed("primary_action"):
+		visible = false
+		_timer = 0.0
 
-    if timer_on:
-        _timer -= delta
+	if timer_on:
+		_timer -= delta
 
-    if timer_on && _timer <= 0:
-        _timer = timer
-        visible = false
-        timer_on = false
+	if timer_on && _timer <= 0:
+		_timer = timer
+		visible = false
+		timer_on = false
 
-        master.init_room()
+		master.init_room()
 
 func new_level(region_index: int, room_index: int) -> void:
-    visible = true
-    region_counter.set_number(region_index)
-    room_counter.set_number(room_index)
+	visible = true
+	region_counter.set_number(region_index)
+	room_counter.set_number(room_index)
 
-    _timer = timer
-    timer_on = true
+	_timer = timer
+	timer_on = true

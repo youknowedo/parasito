@@ -17,7 +17,7 @@ var attack_direction: Vector2
 func _ready():
 	health_changed.emit(health, health)
 
-func damage(amount: int, by: Entity) -> void:
+func damage(amount: int, by: Entity = null) -> void:
 	health = max(0, health - amount)
 	health_changed.emit(health, health + amount)
 	health_set.emit(health, max_health)

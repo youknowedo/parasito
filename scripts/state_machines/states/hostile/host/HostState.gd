@@ -1,8 +1,5 @@
-class_name HostState extends State
+class_name HostState extends HostileState
 
-const ROAMING = "Roaming"
-const CHASING = "Chasing"
-const ATTACKING = "Attacking"
 const P_IDLE = "PIdle"
 const P_MOVING = "PMoving"
 const DASHING = "Dashing"

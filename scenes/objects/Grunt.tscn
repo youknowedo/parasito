@@ -1,16 +1,17 @@
-[gd_scene load_steps=33 format=3 uid="uid://xm5q2u0eyi18"]
+[gd_scene load_steps=34 format=3 uid="uid://xm5q2u0eyi18"]
 
 [ext_resource type="Script" uid="uid://doaebvumrt1lj" path="res://scripts/entities/hostiles/hosts/Grunt.gd" id="1_qbgcj"]
 [ext_resource type="Texture2D" uid="uid://y8mtj51jrn5x" path="res://sprites/grunt.png" id="2_xwuck"]
 [ext_resource type="Script" uid="uid://dug1i3dw6d426" path="res://scripts/ColliderCount.gd" id="3_kpl87"]
 [ext_resource type="Script" uid="uid://2vxqf1vcaj5f" path="res://scripts/state_machines/StateMachine.gd" id="3_qoy2y"]
-[ext_resource type="Script" uid="uid://bt38k0l71s801" path="res://scripts/state_machines/states/host/RoamingState.gd" id="4_fb15v"]
-[ext_resource type="Script" uid="uid://iyvuamqq8uyp" path="res://scripts/state_machines/states/host/ChasingState.gd" id="5_kpl87"]
-[ext_resource type="Script" uid="uid://8hosgct8dgpx" path="res://scripts/state_machines/states/host/PIdleState.gd" id="6_ccgb1"]
-[ext_resource type="Script" uid="uid://dsbx38lh3lgws" path="res://scripts/state_machines/states/host/PMovingState.gd" id="7_vwd7g"]
-[ext_resource type="Script" uid="uid://bdj7pkk3qt1pr" path="res://scripts/state_machines/states/grunt/AttackingState.gd" id="8_np4fa"]
-[ext_resource type="Script" uid="uid://ci8td6weabxx7" path="res://scripts/state_machines/states/shared/DeadState.gd" id="10_ccgb1"]
-[ext_resource type="Script" uid="uid://cep71oicapwn5" path="res://scripts/state_machines/states/shared/Damaged.gd" id="11_vwd7g"]
+[ext_resource type="Script" uid="uid://bt38k0l71s801" path="res://scripts/state_machines/states/hostile/RoamingState.gd" id="5_6ssmk"]
+[ext_resource type="Script" uid="uid://iyvuamqq8uyp" path="res://scripts/state_machines/states/hostile/ChasingState.gd" id="6_ojkah"]
+[ext_resource type="Script" uid="uid://8hosgct8dgpx" path="res://scripts/state_machines/states/hostile/host/PIdleState.gd" id="7_fvj0b"]
+[ext_resource type="Script" uid="uid://dsbx38lh3lgws" path="res://scripts/state_machines/states/hostile/host/PMovingState.gd" id="8_1ib01"]
+[ext_resource type="Script" uid="uid://bdj7pkk3qt1pr" path="res://scripts/state_machines/states/hostile/host/grunt/AttackingState.gd" id="9_da5vb"]
+[ext_resource type="Script" uid="uid://ci8td6weabxx7" path="res://scripts/state_machines/states/DeadState.gd" id="10_v44i4"]
+[ext_resource type="Script" uid="uid://cep71oicapwn5" path="res://scripts/state_machines/states/Damaged.gd" id="11_ftfqh"]
+[ext_resource type="Script" uid="uid://bau3ttwh3aect" path="res://scripts/state_machines/states/hostile/host/DashingState.gd" id="12_la704"]
 
 [sub_resource type="Animation" id="Animation_bxurt"]
 resource_name = "Attack"
@@ -1070,33 +1071,34 @@ collision_mask = 7
 target_position = Vector2(0, 0)
 collision_mask = 7
 
-[node name="StateMachine" type="Node" parent="." node_paths=PackedStringArray("initial_state", "animation_player", "sprite")]
+[node name="StateMachine" type="Node" parent="." node_paths=PackedStringArray("animation_player", "sprite")]
 script = ExtResource("3_qoy2y")
-initial_state = NodePath("Roaming")
 animation_player = NodePath("../AnimationPlayer")
 sprite = NodePath("../Grunt")
 
 [node name="Roaming" type="Node" parent="StateMachine"]
-script = ExtResource("4_fb15v")
+script = ExtResource("5_6ssmk")
 
 [node name="Chasing" type="Node" parent="StateMachine"]
-script = ExtResource("5_kpl87")
+script = ExtResource("6_ojkah")
 
 [node name="PIdle" type="Node" parent="StateMachine"]
-script = ExtResource("6_ccgb1")
+script = ExtResource("7_fvj0b")
 
 [node name="PMoving" type="Node" parent="StateMachine"]
-script = ExtResource("7_vwd7g")
+script = ExtResource("8_1ib01")
 
 [node name="Attacking" type="Node" parent="StateMachine"]
-script = ExtResource("8_np4fa")
+script = ExtResource("9_da5vb")
 
 [node name="Dead" type="Node" parent="StateMachine"]
-script = ExtResource("10_ccgb1")
+script = ExtResource("10_v44i4")
 
 [node name="Damaged" type="Node" parent="StateMachine"]
-script = ExtResource("11_vwd7g")
-weight = 3
+script = ExtResource("11_ftfqh")
+
+[node name="Dashing" type="Node" parent="StateMachine"]
+script = ExtResource("12_la704")
 
 [node name="RichTextLabel" type="RichTextLabel" parent="."]
 offset_right = 40.0

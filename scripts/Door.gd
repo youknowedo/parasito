@@ -9,7 +9,7 @@ func _on_door_body_entered(body:Node2D) -> void:
 
 	var no_hostiles_left = true
 	for child in master.hostiles_parent.get_children():
-		if child.occupier:
+		if "occupier" in child && child.occupier:
 			continue
 		if child.health <= 0:
 			continue	

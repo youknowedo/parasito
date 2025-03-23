@@ -1,6 +1,6 @@
 class_name Damaged extends State
 
-@export var weight: int = 1
+@export var weight = 1.0
 var timer = 0.0
 var by: Entity
 var previous_state_path: String
@@ -17,11 +17,13 @@ func enter(_previous_state_path: String, _data: Dictionary = {
 		previous_state_path = _previous_state_path
 	timer = 0.2
 
+
 	by = _data.by
 	var direction = -entity.to_local(by.global_position).normalized() if by else Vector2.ZERO
 	var angle = atan2(direction.y, direction.x)
+	print(angle)
 	var rounded_angle = (PI / 4) * round(angle / (PI / 4))
-	knock_back_direction = Vector2(cos(rounded_angle), sin(rounded_angle))
+	knock_back_direction = Vector2(cos(rounded_angle), sin(rounded_angle)) if by else Vector2.ZERO
 
 func update(_delta: float) -> void:
 	state_machine.sprite.visible = !state_machine.sprite.visible

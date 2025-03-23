@@ -45,7 +45,7 @@ exit_area = NodePath("ExitArea")
 script = ExtResource("2_wpumy")
 num_of_levels = 1
 rooms = Array[PackedScene]([ExtResource("3_0opgw")])
-enemies = Array[PackedScene]([ExtResource("8_id0rc")])
+enemies = Array[PackedScene]([ExtResource("4_ty6vi")])
 
 [node name="Region2" type="Node" parent="Regions"]
 script = ExtResource("2_wpumy")

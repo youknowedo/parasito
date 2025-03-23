@@ -55,6 +55,7 @@ func update(_delta: float):
 			host.move_and_slide()
 				
 func _on_animation_finished(anim_name: StringName) -> void:
+	print(anim_name)
 	if !anim_name.begins_with("Attack"):
 		return
 
