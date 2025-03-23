@@ -996,7 +996,7 @@ radius = 201.022
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_mjcda"]
 
-[node name="Grunt" type="CharacterBody2D" node_paths=PackedStringArray("text", "slash_sprite", "raycast", "raycast2", "collider_count", "vision_area", "vision_area_collider", "attack_range_area", "attack_range_area_collider", "state_machine") groups=["entity", "host"]]
+[node name="Grunt" type="CharacterBody2D" node_paths=PackedStringArray("text", "slash_sprite", "raycast", "raycast2", "navigation_agent", "collider_count", "vision_area", "vision_area_collider", "attack_range_area", "attack_range_area_collider", "state_machine") groups=["entity", "host"]]
 collision_layer = 4
 collision_mask = 5
 script = ExtResource("1_qbgcj")
@@ -1004,6 +1004,7 @@ text = NodePath("RichTextLabel")
 slash_sprite = NodePath("Slash")
 raycast = NodePath("RayCast2D")
 raycast2 = NodePath("RayCast2D2")
+navigation_agent = NodePath("NavigationAgent2D")
 collider_count = NodePath("CollisionShape2D/StaticRange")
 vision_area = NodePath("VisionRange")
 vision_area_collider = NodePath("VisionRange/CollisionShape2D")
@@ -1032,6 +1033,9 @@ region_rect = Rect2(0, 0, 32, 32)
 libraries = {
 &"": SubResource("AnimationLibrary_dyjh3")
 }
+
+[node name="NavigationAgent2D" type="NavigationAgent2D" parent="."]
+debug_enabled = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(-3, 1)

@@ -4,10 +4,12 @@ class_name Entity
 signal health_changed(new_health: int, old_health: int)
 signal health_set(health: int, max_health: int)
 
+@export var master: Master
 @export var state_machine: StateMachine
 @export var speed = 500.00
 @export var max_health = 100
 @export var health = 100
+
 
 var actual_position: Vector2
 var attack_direction: Vector2

@@ -48,6 +48,7 @@ func update(_delta: float):
 		new_projectile.attack_damage = attack_damage
 		new_projectile.velocity = host.attack_direction * projectile_speed
 		new_projectile.origin = host
+		new_projectile.global_position = host.global_position
 		host.add_child(new_projectile)
 		attack_timer = attack_wait_time
 
@@ -56,7 +57,7 @@ func update(_delta: float):
 	if host.occupier:
 		return
 	
-	host.raycast_collision_point = host.to_local(host.attack_target.global_position)
+	host.raycast.target_position = host.to_local(host.attack_target.global_position)
 	if host.raycast.is_colliding():
 		var collider = host.raycast.get_collider()
 		if collider != host.attack_target:

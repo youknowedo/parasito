@@ -17,6 +17,8 @@ var current_room_index = -1
 var current_room: Room
 var current_level = 0
 
+var navigation_region: NavigationRegion2D
+
 func _ready() -> void:
 	title_rect.visible = true
 
@@ -60,6 +62,8 @@ func init_room() -> void:
 
 	current_room = regions[current_region_index].rooms[current_room_index].instantiate()
 	current_room.position = Vector2.ZERO
+	
+	navigation_region = current_room.navigation_region
 
 	enter_door.position = current_room.player_spawn_point.position
 	enter_door.position.x -= 32
@@ -75,7 +79,8 @@ func init_room() -> void:
 	add_child(current_room)
 
 	for spawn_point in current_room.spawn_points:
-		var enemy = current_room.enemies[randi() % current_room.enemies.size()].instantiate()
+		var enemy: Hostile = current_room.enemies[randi() % current_room.enemies.size()].instantiate()
+		enemy.master = self
 		enemy.position = spawn_point.position
 		hostiles_parent.add_child(enemy)
 

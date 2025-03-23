@@ -1,10 +1,14 @@
 extends HostState
 
+var recalculate_path_timer: float = 0.0
+
 func enter(_previous: String, _data: Dictionary = {}):
 	state_machine.animation_player.stop()
 	state_machine.animation_player.play("Moving")
 
-func physics_update(_delta: float):
+	recalculate_path_timer = host.recalculate_path_wait_time
+
+func update(_delta: float):
 	if host.attack_target == null:
 		finished.emit(ROAMING)
 		return
@@ -12,29 +16,41 @@ func physics_update(_delta: float):
 		finished.emit(P_IDLE)
 		return
 
-	# Check if has line of sight
 	host.raycast.target_position = host.to_local(host.attack_target.global_position)
 	if host.raycast.is_colliding():
 		var collider = host.raycast.get_collider()
 		host.raycast_collision_point = host.to_local(host.raycast.get_collision_point())
-		if collider != host.attack_target:
-			finished.emit(ROAMING)
+		if collider == host.attack_target:
+			host.target_last_known_position = host.attack_target.global_position
 
-	# Check if in attack range
-	if host.in_attack_range:
-		finished.emit(ATTACKING)
+			if host.in_attack_range:
+				finished.emit(ATTACKING)
+				return
+
+	if recalculate_path_timer > 0.0:
+		recalculate_path_timer -= _delta
+	else:
+		recalculate_path_timer = host.recalculate_path_wait_time
+		host.navigation_agent.target_position = host.target_last_known_position
+
+func physics_update(_delta: float):
+	if host.navigation_agent.is_navigation_finished() && host.global_position.distance_to(host.target_last_known_position) < host.navigation_agent.path_desired_distance:
+		finished.emit(ROAMING)		
+		host.target_last_known_position = Vector2.ZERO
 		return
 
-	var angle = (host.attack_target.global_position - host.attack_range_area_collider.global_position).angle()
-	var rounded_angle = (PI / 4) * round(angle / (PI / 4))
-	host.attack_direction = Vector2(cos(rounded_angle), sin(rounded_angle))
+	var next_position = host.navigation_agent.get_next_path_position()
 
-	if cos(rounded_angle) > 0:
+	var direction = host.global_position.direction_to(next_position) * host.speed * _delta
+	var angle = atan2(direction.y, direction.x)
+	var rounded_angle = (PI / 4) * round(angle / (PI / 4))
+	host.velocity = Vector2(cos(rounded_angle), sin(rounded_angle)) * host.speed * _delta
+
+	if cos(angle) > 0:
 		state_machine.sprite.flip_h = false
 	else:
 		state_machine.sprite.flip_h = true
 
-	host.velocity = host.attack_direction * host.speed * _delta
 	if host.collider_count.count == 0:
 		host.move_and_slide()
 

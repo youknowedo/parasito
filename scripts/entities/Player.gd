@@ -4,7 +4,6 @@ class_name Player
 signal player_health_set(health: int, max_health: int, host_health: int, max_host_health: int)
 signal died()
 
-@export var master: Master
 @export var passive_damage_timer_duration = 1.0
 @onready var passive_damage_timer = passive_damage_timer_duration
 
